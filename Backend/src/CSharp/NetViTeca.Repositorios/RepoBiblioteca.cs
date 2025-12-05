@@ -15,10 +15,7 @@ public class RepoBiblioteca : RepoBaseAdo, IRepoBiblioteca
     /// </summary>
     public RepoBiblioteca(NetViTecaDbContext context) : base(context) { }
 
-    /// <summary>
-    /// Inserta múltiples registros en la tabla Biblioteca y guarda los cambios.
-    /// </summary>
-    /// <param name="nuevosRegistros">Lista de objetos Biblioteca a insertar.</param>
+    /// <inheritdoc />
     public async Task AsignarLibrosAUsuario(List<Biblioteca> nuevosRegistros)
     {
         // _context viene heredado de RepoBaseAdo

@@ -1,4 +1,3 @@
-using MySqlX.XDevAPI.Common;
 using NetViTeca.Core.IServices;
 using NetViTeca.Core.Models;
 using NetViTeca.Core.Persistencia;
@@ -18,7 +17,7 @@ public class BibliotecaService : IBibliotecaService
     }
 
     /// <inheritdoc/>
-    public async Task<Result<List<Libro>>> ObtenerLibrosDisponibles(int idUsuario, string? filtroTitulo)
+    public async Task<Result<List<Libro>>> ObtenerLibrosDisponibleTitulo(int idUsuario, string? filtroTitulo)
     {
         var libros = await _repoLibro.LibrosNoEnBibliotecaUsuario(idUsuario);
 

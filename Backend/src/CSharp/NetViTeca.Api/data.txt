@@ -1,0 +1,4 @@
+"AllowedHosts": "*",
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost;Database=NetViTecaDB;Uid=root;Pwd=password;"
+  }

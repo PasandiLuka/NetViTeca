@@ -14,6 +14,7 @@ public static class AppEndpoints
         app.MapGeneroEndpoints();
         app.MapLibroEndpoints();
         app.MapBibliotecaEndpoints();
+        app.MapUsuarioEndpoints();
 
         return app;
     }

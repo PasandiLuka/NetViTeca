@@ -29,6 +29,7 @@ public class RepoLibro : RepoBaseAdo, IRepoLibro
             .Where(b => b.idUsuario == idUsuario)
             .Select(b => b.Libros)
             .Include(l => l.genero)
+            .OrderBy(l => l.idLibro)
             .ToListAsync();
     }
 
@@ -39,6 +40,7 @@ public class RepoLibro : RepoBaseAdo, IRepoLibro
         return await _context.Libros
             .Include(l => l.genero)
             .Where(l => !_context.Bibliotecas.Any(b => b.idLibro == l.idLibro && b.idUsuario == idUsuario))
+            .OrderBy(l => l.idLibro)
             .ToListAsync();
     }
 }
