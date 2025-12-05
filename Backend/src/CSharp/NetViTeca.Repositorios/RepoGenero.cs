@@ -29,6 +29,6 @@ public class RepoGenero : RepoBaseAdo, IRepoGenero
     /// <inheritdoc />
     public async Task<List<Genero>> ObtenerGeneros()
     {
-        return await _context.Generos.ToListAsync();
+        return await _context.Generos.OrderBy(g => g.idGenero).ToListAsync();
     }
 }

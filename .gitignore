@@ -416,3 +416,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Para ignorar el archivo donde se encuentran las contraseñas
+appsettings.json

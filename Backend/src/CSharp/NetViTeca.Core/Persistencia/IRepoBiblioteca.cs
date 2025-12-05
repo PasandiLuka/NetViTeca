@@ -8,8 +8,9 @@ namespace NetViTeca.Core.Persistencia;
 public interface IRepoBiblioteca
 {
     /// <summary>
-    /// Guarda una lista masiva de libros asignados a un usuario.
+    /// Inserta múltiples registros en la tabla Biblioteca y guarda los cambios.
     /// </summary>
+    /// <param name="nuevosRegistros">Lista de objetos Biblioteca a insertar.</param>
     Task AsignarLibrosAUsuario(List<Biblioteca> nuevosRegistros);
 
     /// <summary>

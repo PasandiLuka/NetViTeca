@@ -14,7 +14,7 @@ public interface IBibliotecaService
     /// <param name="idUsuario">ID del usuario.</param>
     /// <param name="filtroTitulo">Texto opcional para buscar por título.</param>
     /// <returns>Lista de libros disponibles envuelta en un Result.</returns>
-    Task<Result<List<Libro>>> ObtenerLibrosDisponibles(int idUsuario, string? filtroTitulo);
+    Task<Result<List<Libro>>> ObtenerLibrosDisponibleTitulo(int idUsuario, string? filtroTitulo);
 
     /// <summary>
     /// Asigna masivamente una lista de libros a un usuario.

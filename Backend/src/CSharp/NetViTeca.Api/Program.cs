@@ -6,6 +6,9 @@ using NetViTeca.Api.Endpoints;
 using NetViTeca.Repositories;
 using NetViTeca.Services;
 using Microsoft.EntityFrameworkCore;
+using NetViTeca.Data.Repositorios;
+using NetViTeca.Core.Servicios;
+using NetViTeca.Api.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,13 +32,20 @@ builder.Services.AddDbContext<NetViTecaDbContext>(
 builder.Services.AddScoped<IRepoBiblioteca, RepoBiblioteca>();
 builder.Services.AddScoped<IRepoGenero, RepoGenero>();
 builder.Services.AddScoped<IRepoLibro, RepoLibro>();
+builder.Services.AddScoped<IRepoUsuario, RepoUsuario>();
 
 // Servicios
 builder.Services.AddScoped<IBibliotecaService, BibliotecaService>();
 builder.Services.AddScoped<IGeneroService, GeneroService>();
 builder.Services.AddScoped<ILibroService, LibroService>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+
 
 var app = builder.Build();
+
+const string sqlSeedPath = "../../../scripts/bd/MySql/00 INSERTS.sql"; // <-- RUTA AJUSTADA
+
+app.ApplyMigrationsAndSeed(sqlSeedPath); 
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

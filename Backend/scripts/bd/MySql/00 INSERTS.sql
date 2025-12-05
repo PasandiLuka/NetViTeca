@@ -1,15 +1,15 @@
-INSERT INTO Usuarios (nombreCompleto, nombreUsuario, correo, contrasena, numeroTelefono) VALUES 
+INSERT INTO Usuario (nombreCompleto, nombreUsuario, correo, contrasena, numeroTelefono) VALUES 
 ('Lucca Pazanddi', 'LUKITA7956', 'lukita@gmail.com', 'luka1234', '1123456789'),
 ('Sebaz Serpa', 'SEBITA7956', 'sebita@gmail.com', 'seba1234', '1231234324');
 
-INSERT INTO Generos (genero) VALUES 
-('Fantasia'),
-('Clásicos'),
-('Infantil'),
-('Distopico'),
-('Aventura');
+INSERT INTO Genero (idGenero, genero) VALUES 
+(1, 'Fantasia'),
+(2, 'Clásicos'),
+(3, 'Infantil'),
+(4, 'Distopico'),
+(5, 'Aventura');
 
-INSERT INTO Libros (idGenero, titulo, editorial, autor, fechaCreacion, cantidadPaginas) VALUES 
+INSERT INTO Libro (idGenero, titulo, editorial, autor, fechaCreacion, cantidadPaginas) VALUES 
 (1, 'Cien años de soledad', 'Sudamericana', 'Gabriel García Márquez', '1967-06-05', 417),
 (2, 'Don Quijote de la Mancha', 'Francisco de Robles', 'Miguel de Cervantes', '1605-01-16', 863),
 (3, 'El Principito', 'Reynal & Hitchcock', 'Antoine de Saint-Exupéry', '1943-04-06', 96),
@@ -31,7 +31,7 @@ INSERT INTO Libros (idGenero, titulo, editorial, autor, fechaCreacion, cantidadP
 (4, 'Animal Farm', 'Secker & Warburg', 'George Orwell', '1945-08-17', 112),
 (5, 'Los hermanos Karamázov', 'The Russian Messenger', 'Fiódor Dostoievski', '1880-01-01', 824);
 
-INSERT INTO Bibliotecas (idUsuario, idLibro) VALUES 
+INSERT INTO Biblioteca (idUsuario, idLibro) VALUES 
 (1, 1),
 (1, 2),
 (1, 3),
