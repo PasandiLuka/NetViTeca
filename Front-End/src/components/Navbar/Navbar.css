@@ -1,0 +1,78 @@
+/* CONTENEDOR PRINCIPAL */
+.nv-navbar {
+  width: 100%;
+  background: #ffffff; /* Temporal */
+  border-bottom: 1px solid #ddd;
+}
+
+.nv-container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+}
+
+/* LOGO */
+.nv-logo {
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+}
+
+/* HAMBURGUESA */
+.nv-toggle {
+  display: none;
+  flex-direction: column;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.nv-toggle-icon {
+  width: 25px;
+  height: 3px;
+  background: black;
+  margin: 4px 0;
+  transition: 0.3s;
+}
+
+/* LINKS DESKTOP */
+.nv-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.nv-link {
+  text-decoration: none;
+  color: black;
+  font-size: 1rem;
+}
+
+.nv-logout {
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .nv-toggle {
+    display: flex;
+  }
+
+  .nv-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px 0;
+    background: white;
+  }
+
+  .nv-links.nv-open {
+    display: flex;
+  }
+}
