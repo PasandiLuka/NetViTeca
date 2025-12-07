@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
-import BookCard from "../../components/BookCard";
+import BookCard from "../../components/BookCard/BookCard";
 import { getBooks, type Book } from "../../services/bookService";
 // import { getSession } from "../../utils/Auth"; // No se está usando por ahora
+
+import { useMyBooks } from "../../context/MyBooksContext";
 
 const Catalogo = () => {
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { addBook } = useMyBooks();
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -62,6 +65,10 @@ const Catalogo = () => {
             author={book.author}
             description={book.description}
             onClick={() => console.log(`Abrir libro: ${book.title}`)}
+            onAdd={() => {
+              addBook(book);
+              alert(`Libro "${book.title}" agregado a tus libros`);
+            }}
           />
         ))}
       </div>
