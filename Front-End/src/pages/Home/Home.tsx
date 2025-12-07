@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Home.css";
+import { Link } from "react-router-dom";
 
 const covers = [
   "/../../../public/DonQuijote.png",
@@ -7,9 +8,6 @@ const covers = [
   "/../../../public/Principito.jpeg",
   "/../../../public/portada_el-senor-de-los-anillos_j-r-r-tolkien_201601252224.jpg",
 ];
-
-// TODO: reemplazá los paths de arriba por las rutas reales de las portadas
-// (por ejemplo: "/portadas/libro1.png", etc.)
 
 export default function Home() {
   const [current, setCurrent] = useState(0);
@@ -45,39 +43,45 @@ export default function Home() {
               </span>
               <br />
               <span className="stagger stagger-4 inline-block text-cyan-300">
-                personalizada y siempre disponible.
+                personalizada y siempre a disposición.
               </span>
             </h1>
 
             <p className="text-base md:text-lg text-gray-300 max-w-xl stagger stagger-5">
-              Gestioná tus libros, descubrí nuevos títulos y organizá tu
-              colección de forma simple, moderna y totalmente online.
+              Gestiona, descubre y organiza nuevos titulos y colecciones
+              de forma simple, moderna y sin preocuparte de su envejecimiento.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-2 stagger stagger-6">
               {/* CTA primario: Iniciar sesión */}
-              <button
-                className="
-                  px-6 py-3 rounded-xl
-                  bg-cyan-500/90 text-black font-semibold
-                  shadow-[0_0_20px_rgba(56,189,248,0.45)]
-                  hover:bg-cyan-400 hover:shadow-[0_0_26px_rgba(56,189,248,0.6)]
-                  transition-all duration-200
-                "
-              >
-                Iniciar sesión
-              </button>
+              <Link 
+                to={"/login"}>
+                <button
+                  className="
+                    px-6 py-3 rounded-xl
+                    bg-cyan-500/90 text-white font-semibold
+                    shadow-[0_0_20px_rgba(56,189,248,0.45)]
+                    hover:bg-cyan-400 hover:shadow-[0_0_26px_rgba(56,189,248,0.6)]
+                    transition-all duration-200
+                  "
+                >
+                  Iniciar sesión
+                </button>
+              </Link>
 
               {/* CTA secundario: Registrarse */}
               <button
                 className="
                   px-6 py-3 rounded-xl
-                  border border-red-500/70 text-red-300 font-semibold
-                  hover:bg-red-500/10 hover:text-red-200
+                  border border-red-500/70 text-cyan-300 font-semibold
+                  hover:bg-red-500/10 hover:text-cyan-200
                   transition-all duration-200
                 "
               >
-                Registrarse
+                <Link 
+                to={"/register"}>
+                  Registrarse
+                </Link>
               </button>
             </div>
           </div>

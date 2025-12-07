@@ -1,8 +1,11 @@
-
+import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import type { NavbarProps } from "../../types/NavbarProps";
 
+
 export default function Navbar({ open, setOpen }: NavbarProps) {
+  
+
   return (
     <nav
       className="
@@ -19,8 +22,17 @@ export default function Navbar({ open, setOpen }: NavbarProps) {
         }`}
       >
         <div className="flex items-center gap-3">
-          <a href="/index"><img src="/logoNetViTeca.png" className="w-24" /></a>
-          <h2 className="text-xl font-semibold">NetViTeca</h2>
+          <Link
+            to="/"
+            className="
+              flex items-center gap-3 no-underline text-white
+              hover:text-cyan-300 hover:drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]
+              transition-all duration-200
+            "
+          >
+            <img src="/logoNetViTeca.png" className="w-24" />
+            <h2 className="text-xl font-semibold ">NetViTeca</h2>
+          </Link>
         </div>
       </div>
       {/* HAMBURGER */}
@@ -30,6 +42,7 @@ export default function Navbar({ open, setOpen }: NavbarProps) {
       >
         {open ? <X size={30} /> : <Menu size={30} />}
       </button>
+      
     </nav>
   );
 }
