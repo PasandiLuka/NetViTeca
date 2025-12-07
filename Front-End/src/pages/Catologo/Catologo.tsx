@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import BookCard from "../../components/BookCard/BookCard";
+import GenreFilter from "../../components/GenreFilter/GenreFilter";
 import { getBooks, type Book } from "../../services/bookService";
 // import { getSession } from "../../utils/Auth"; // No se está usando por ahora
 
@@ -9,6 +10,7 @@ const Catalogo = () => {
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedGenre, setSelectedGenre] = useState("Todos");
   const { addBook } = useMyBooks();
 
   useEffect(() => {
@@ -54,23 +56,32 @@ const Catalogo = () => {
 
   return (
     <div className="p-8">
-      <h1 className="text-3xl font-bold text-white mb-8">Catálogo de Libros</h1>
+      <div className="flex flex-col md:flex-row justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold text-white mb-4 md:mb-0">Catálogo de Libros</h1>
+        <GenreFilter
+          genres={Array.from(new Set(books.map((book) => book.genre))).filter(Boolean).sort()} // Extract unique existing genres
+          selectedGenre={selectedGenre}
+          onSelectGenre={setSelectedGenre}
+        />
+      </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-        {books.map((book) => (
-          <BookCard
-            key={book.id}
-            image={book.image}
-            title={book.title}
-            author={book.author}
-            description={book.description}
-            onClick={() => console.log(`Abrir libro: ${book.title}`)}
-            onAdd={() => {
-              addBook(book);
-              alert(`Libro "${book.title}" agregado a tus libros`);
-            }}
-          />
-        ))}
+        {books
+          .filter(book => selectedGenre === "Todos" || book.genre === selectedGenre)
+          .map((book) => (
+            <BookCard
+              key={book.id}
+              image={book.image}
+              title={book.title}
+              author={book.author}
+              description={book.description}
+              onClick={() => console.log(`Abrir libro: ${book.title}`)}
+              onAdd={() => {
+                addBook(book);
+                alert(`Libro "${book.title}" agregado a tus libros`);
+              }}
+            />
+          ))}
       </div>
     </div>
   );

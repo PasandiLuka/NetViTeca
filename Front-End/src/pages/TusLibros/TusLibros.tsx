@@ -1,10 +1,26 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BookCard from "../../components/BookCard/BookCard";
 import { useMyBooks } from "../../context/MyBooksContext";
 
 const TusLibros = () => {
-  const { myBooks } = useMyBooks();
+  const { myBooks, removeBook } = useMyBooks();
   const navigate = useNavigate();
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [bookToDelete, setBookToDelete] = useState<any>(null); // Using any to simplify avoiding complex type imports for now, or infer from usage
+
+  const handleDeleteRequest = (book: any) => {
+    setBookToDelete(book);
+    setDeleteModalOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (bookToDelete) {
+      removeBook(bookToDelete.id);
+      setDeleteModalOpen(false);
+      setBookToDelete(null);
+    }
+  };
 
   if (myBooks.length === 0) {
     return (
@@ -38,12 +54,63 @@ const TusLibros = () => {
             title={book.title}
             author={book.author}
             description={book.description}
-            // En la vista de mis libros, el botón de agregar podría estar deshabilitado o no hacer nada
-            // O podríamos poner lógica para "Leer"
+            url={book.url}
+            onDelete={() => handleDeleteRequest(book)}
             onClick={() => console.log(`Leer libro: ${book.title}`)}
           />
         ))}
       </div>
+
+      {/* DELETE CONFIRMATION MODAL */}
+      {deleteModalOpen && bookToDelete && (
+        <div
+          className="
+            fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50
+            animate-fadeIn
+          "
+        >
+          <div className="
+            bg-black/60 rounded-xl border border-white/10 p-8 w-[90%] max-w-md
+            shadow-[0_0_40px_rgba(255,50,50,0.4)]
+            text-center
+          ">
+            <h2 className="text-2xl text-white font-bold mb-4">¿Eliminar Libro?</h2>
+
+            <p className="text-gray-300 mb-2">
+              Vas a eliminar <span className="text-cyan-400 font-semibold">{bookToDelete.title}</span> de tu biblioteca.
+            </p>
+            <p className="text-gray-400 text-sm mb-6">
+              Esta acción no se puede deshacer (a menos que lo agregues de nuevo desde el catálogo).
+            </p>
+
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={confirmDelete}
+                className="
+                    w-full py-2 rounded-lg font-semibold text-white
+                    bg-red-600 
+                    hover:bg-red-500 hover:text-white
+                    active:scale-[0.97] transition-all
+                    shadow-lg shadow-red-500/20
+                "
+              >
+                Sí, eliminar
+              </button>
+
+              <button
+                className="
+                    w-full py-2 rounded-lg font-semibold text-gray-300
+                    hover:text-white hover:bg-white/10
+                    transition-all
+                "
+                onClick={() => setDeleteModalOpen(false)}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

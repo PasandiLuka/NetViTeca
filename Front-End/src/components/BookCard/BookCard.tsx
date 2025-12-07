@@ -1,8 +1,10 @@
 import type { BookCardProps } from "@/types/BookCardProps";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 
-export default function BookCard({ image, title, author, description, audio, onAdd }: BookCardProps) {
+
+export default function BookCard({ image, title, author, description, audio, onAdd, onDelete, url }: BookCardProps) {
   const [openModal, setOpenModal] = useState(false);
 
   return (
@@ -17,6 +19,7 @@ export default function BookCard({ image, title, author, description, audio, onA
           hover:shadow-[0_0_35px_rgba(0,200,255,0.35)]
           backdrop-blur-lg transition-all duration-300
           hover:-translate-y-1 hover:border-cyan-400/50
+          relative
         "
       >
         <div className="relative w-full aspect-[3/4] overflow-hidden rounded-t-xl">
@@ -35,6 +38,22 @@ export default function BookCard({ image, title, author, description, audio, onA
             </span>
           )}
 
+          {/* Botón Eliminar en la tarjeta (antes de presionar) */}
+          {onDelete && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete();
+              }}
+              className="
+                 absolute top-2 right-2 bg-red-500/80 text-white text-xs px-2 py-1 rounded-md font-bold shadow-lg
+                 hover:bg-red-600 transition-colors z-20
+               "
+            >
+              ✕ Eliminar
+            </button>
+          )}
+
           <div className="absolute bottom-0 w-full h-16 bg-gradient-to-t from-black/80 to-transparent"></div>
         </div>
 
@@ -51,7 +70,7 @@ export default function BookCard({ image, title, author, description, audio, onA
             {description}
           </p>
 
-          {/* BOTÓN */}
+          {/* BOTÓN (Solo mostrar Agregar aquí si existe onAdd) */}
           {onAdd && (
             <button
               onClick={(e) => {
@@ -84,7 +103,7 @@ export default function BookCard({ image, title, author, description, audio, onA
             bg-black/60 rounded-xl border border-white/10 p-8 w-[90%] max-w-xl 
             shadow-[0_0_40px_rgba(0,200,255,0.4)]
           ">
-            <h2 className="text-3xl text-cyan-300 font-bold">{title}</h2>
+            <h2 className="text-3xl text-white hover:text-cyan-300 transition-colors duration-300 font-bold">{title}</h2>
             <p className="text-gray-300 text-sm mt-1 mb-4">por {author}</p>
 
             <img src={image} className="w-40 h-56 object-cover rounded-lg shadow mx-auto mb-4" />
@@ -105,6 +124,37 @@ export default function BookCard({ image, title, author, description, audio, onA
                 }}
               >
                 + Agregar a mi biblioteca
+              </button>
+            )}
+
+            {/* Link Externo */}
+            {url && (
+              <Link
+                to={url}
+                className="
+                  block w-full mt-3 py-2 rounded-lg font-semibold text-center
+                  bg-cyan-600 hover:bg-cyan-500 transition-all duration-300
+                  text-white hover:text-cyan-400              /* 👈 foco del efecto */
+                  active:scale-[0.97]
+                  shadow-[0_0_15px_rgba(0,200,255,0.35)]
+                "
+              >
+                📖 Ver Libro
+              </Link>
+            )}
+
+            {/* Eliminar en Modal */}
+            {onDelete && (
+              <button
+                onClick={() => { onDelete(); setOpenModal(false); }}
+                className="
+                  w-full mt-3 py-2 rounded-lg font-semibold text-white
+                  bg-red-600 
+                  hover:bg-red-500 hover:text-red-400
+                  active:scale-[0.97] transition-all
+                "
+              >
+                🗑 Eliminar de mi biblioteca
               </button>
             )}
 

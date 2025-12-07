@@ -6,6 +6,8 @@ export interface Book {
     author: string;
     description: string;
     image: string;
+    url?: string;
+    genre: string;
 }
 
 export const getBooks = (): Promise<Book[]> => {

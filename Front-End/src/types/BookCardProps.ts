@@ -6,4 +6,6 @@ export interface BookCardProps {
     audio?: boolean;
     onClick?: () => void
     onAdd?: () => void
+    onDelete?: () => void
+    url?: string
 }
