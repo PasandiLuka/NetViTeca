@@ -5,6 +5,8 @@ import Catalogo from "../pages/Catologo/Catologo";
 import MisLibros from "../pages/TusLibros/MisLibros";
 import Genero from "../pages/Genero/Genero";
 import Libro from "../pages/Libro/Libro";
+import CreateBook from "../pages/Libro/CreateBook";
+import CreateGenre from "../pages/Genero/CreateGenre";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import ProtectedRoute from "./ProtectedRouter";
@@ -24,6 +26,8 @@ function AppRouter() {
         <Route path="/mislibros" element={<MisLibros />} />
         <Route path="/genero" element={<Genero />} />
         <Route path="/libro" element={<Libro />} />
+        <Route path="/crearlibro" element={<CreateBook />} />
+        <Route path="/creargenero" element={<CreateGenre />} />
       </Route>
 
     </Routes>

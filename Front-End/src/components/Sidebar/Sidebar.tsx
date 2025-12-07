@@ -58,6 +58,24 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
               {item.label}
             </a>
           ))}
+
+          <div className="h-px bg-white/10 my-2"></div>
+
+          <a
+            href="/crearlibro"
+            className="text-cyan-400 font-semibold text-lg py-2 px-3 rounded-md transition-all duration-300 hover:text-cyan-300 hover:bg-cyan-500/10 hover:translate-x-2 flex items-center gap-2"
+            onClick={onClose}
+          >
+            + Crear Libro
+          </a>
+
+          <a
+            href="/creargenero"
+            className="text-cyan-400 font-semibold text-lg py-2 px-3 rounded-md transition-all duration-300 hover:text-cyan-300 hover:bg-cyan-500/10 hover:translate-x-2 flex items-center gap-2"
+            onClick={onClose}
+          >
+            + Crear Género
+          </a>
         </nav>
 
         {/* 🔥 BOTÓN ABAJO DEL TODO */}
