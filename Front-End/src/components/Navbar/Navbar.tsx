@@ -59,7 +59,7 @@ export default function Navbar({ open, setOpen }: NavbarProps) {
           {dropdownOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-gray-900 border border-white/10 rounded-md shadow-lg py-2 flex flex-col z-50">
               <Link
-                to="/perfil"
+                to="/miperfil"
                 className="text-left px-4 py-2 text-gray-300 hover:bg-white/10 hover:text-white transition w-full"
                 onClick={() => {
                   setDropdownOpen(false);

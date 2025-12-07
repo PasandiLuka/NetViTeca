@@ -6,6 +6,7 @@ export type AuthContextType = {
   loading: boolean;
   login: (u: User) => void;
   logoutUser: () => void;
+  updateAuthSession: (u: User) => void;
 };
 
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -32,8 +33,13 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     logout();
   };
 
+  const updateAuthSession = (u: User) => {
+    setUser(u);
+    localStorage.setItem("session", JSON.stringify(u));
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, logoutUser }}>
+    <AuthContext.Provider value={{ user, loading, login, logoutUser, updateAuthSession }}>
       {children}
     </AuthContext.Provider>
   );

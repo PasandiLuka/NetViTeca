@@ -2,11 +2,12 @@ import { Routes, Route } from "react-router-dom";
 import MainLayout from "../layout/mainLayout";
 import Home from "../pages/Home/Home";
 import Catalogo from "../pages/Catologo/Catologo";
-import MisLibros from "../pages/TusLibros/MisLibros";
+import MisLibros from "../pages/MisLibros/MisLibros";
 import Genero from "../pages/Genero/Genero";
 import Libro from "../pages/Libro/Libro";
 import CreateBook from "../pages/Libro/CreateBook";
 import CreateGenre from "../pages/Genero/CreateGenre";
+import MiPerfil from "../pages/MiPerfil/MiPerfil";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import ProtectedRoute from "./ProtectedRouter";
@@ -28,6 +29,7 @@ function AppRouter() {
         <Route path="/libro" element={<Libro />} />
         <Route path="/crearlibro" element={<CreateBook />} />
         <Route path="/creargenero" element={<CreateGenre />} />
+        <Route path="/miperfil" element={<MiPerfil />} />
       </Route>
 
     </Routes>
