@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import BookCard from "../../components/BookCard/BookCard";
 import { useMyBooks } from "../../context/MyBooksContext";
 
-const TusLibros = () => {
+const MisLibros = () => {
   const { myBooks, removeBook } = useMyBooks();
   const navigate = useNavigate();
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [bookToDelete, setBookToDelete] = useState<any>(null); // Using any to simplify avoiding complex type imports for now, or infer from usage
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleDeleteRequest = (book: any) => {
     setBookToDelete(book);
@@ -21,6 +29,14 @@ const TusLibros = () => {
       setBookToDelete(null);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-[50vh]">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-cyan-400"></div>
+      </div>
+    );
+  }
 
   if (myBooks.length === 0) {
     return (
@@ -115,4 +131,4 @@ const TusLibros = () => {
   );
 };
 
-export default TusLibros;
+export default MisLibros;

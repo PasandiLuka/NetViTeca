@@ -5,7 +5,7 @@ import { AuthContext } from "../../context/AuthContext";
 
 
 export default function Sidebar({ open, onClose }: SidebarProps) {
-  const {logoutUser,user} = useContext(AuthContext);
+  const { logoutUser, user } = useContext(AuthContext);
   return (
     <>
       {/* BACKDROP */}
@@ -39,11 +39,10 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
         {/* 🔹 MENU LINKS */}
         <nav className="flex flex-col gap-2 px-6 mt-4">
           {[
-            {href: "/", label: "Inicio"},
-            {href: "/catalogo", label: "Catálogo"},
-            {href: "/tuslibros", label: "Tus libros"},
-            {href: "/genero", label: "Género"},
-            {href: "/libro", label: "Libro"},
+            { href: "/", label: "Inicio" },
+            { href: "/catalogo", label: "Catálogo" },
+            { href: "/genero", label: "Género" },
+            // "Libro" eliminado ya que ahora está en el dropdown del usuario
           ].map((item) => (
             <a
               key={item.href}

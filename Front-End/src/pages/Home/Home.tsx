@@ -54,8 +54,8 @@ export default function Home() {
 
             <div className="flex flex-wrap gap-4 pt-2 stagger stagger-6">
               {/* CTA primario: Iniciar sesión */}
-              <Link 
-                to={"/login"}>
+              <Link
+                to={"/catalogo"}>
                 <button
                   className="
                     px-6 py-3 rounded-xl
@@ -65,24 +65,25 @@ export default function Home() {
                     transition-all duration-200
                   "
                 >
-                  Iniciar sesión
+                  Catalogo
                 </button>
               </Link>
 
-              {/* CTA secundario: Registrarse */}
-              <button
-                className="
-                  px-6 py-3 rounded-xl
-                  border border-red-500/70 text-cyan-300 font-semibold
-                  hover:bg-red-500/10 hover:text-cyan-200
-                  transition-all duration-200
-                "
-              >
-                <Link 
-                to={"/register"}>
-                  Registrarse
-                </Link>
-              </button>
+              {/* CTA secundario: Empezar tu lectura */}
+              <Link
+                to={"/mislibros"}>
+                <button
+                  className="
+                    px-6 py-3 rounded-xl
+                    bg-cyan-500/90 text-white font-semibold
+                    shadow-[0_0_20px_rgba(56,189,248,0.45)]
+                    hover:bg-cyan-400 hover:shadow-[0_0_26px_rgba(56,189,248,0.6)]
+                    transition-all duration-200
+                  "
+                >
+                  Empezar tu lectura
+                </button>
+              </Link>
             </div>
           </div>
 

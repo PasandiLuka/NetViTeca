@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import type { NavbarProps } from "../../types/NavbarProps";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 
 export default function Navbar({ open, setOpen }: NavbarProps) {
-  
+  const { user, logoutUser } = useContext(AuthContext);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
 
   return (
     <nav
@@ -15,34 +19,78 @@ export default function Navbar({ open, setOpen }: NavbarProps) {
         flex items-center justify-between px-6 z-50
       "
     >
-      {/* LOGO + TITULO */}
-      <div
-        className={`transition-transform duration-300 ${
-          open ? "translate-x-[280px]" : ""
-        }`}
-      >
-        <div className="flex items-center gap-3">
-          <Link
-            to="/"
-            className="
+      {/* IZQUIERDA: HAMBURGER + LOGO + TITULO */}
+      <div className="flex items-center gap-4">
+        {/* HAMBURGER */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="text-white hover:text-cyan-400 transition"
+        >
+          {open ? <X size={20} /> : <Menu size={20} />}
+        </button>
+
+        {/* LOGO + TITULO */}
+        <Link
+          to="/"
+          className="
               flex items-center gap-3 no-underline text-white
               hover:text-cyan-300 hover:drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]
               transition-all duration-200
             "
-          >
-            <img src="/logoNetViTeca.png" className="w-24" />
-            <h2 className="text-xl font-semibold ">NetViTeca</h2>
-          </Link>
-        </div>
+        >
+          <img src="/logoNetViTeca.png" className="w-24" />
+          <h2 className="text-xl font-semibold ">NetViTeca</h2>
+        </Link>
       </div>
-      {/* HAMBURGER */}
-      <button
-        onClick={() => setOpen(!open)}
-        className="text-white hover:text-cyan-400 transition"
-      >
-        {open ? <X size={30} /> : <Menu size={30} />}
-      </button>
-      
+
+      {/* DERECHA: USUARIO */}
+      {user && (
+        <div className="relative">
+          <button
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+            className="flex items-center gap-2 text-white hover:text-cyan-300 transition focus:outline-none"
+          >
+
+            <span className="font-medium text-lg">{user.fullname || user.username}</span>
+            <ChevronDown size={20} className={`transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
+          </button>
+
+          {/* DROPDOWN MENU */}
+          {dropdownOpen && (
+            <div className="absolute right-0 mt-2 w-48 bg-gray-900 border border-white/10 rounded-md shadow-lg py-2 flex flex-col z-50">
+              <Link
+                to="/perfil"
+                className="text-left px-4 py-2 text-gray-300 hover:bg-white/10 hover:text-white transition w-full"
+                onClick={() => {
+                  setDropdownOpen(false);
+                  // Acción "Mi perfil" por definir
+                }}
+              >
+                Mi perfil
+              </Link>
+              <Link
+                to="/mislibros"
+                className="px-4 py-2 text-gray-300 hover:bg-white/10 hover:text-white transition block"
+                onClick={() => setDropdownOpen(false)}
+              >
+                Mis Libros
+              </Link>
+              <div className="h-px bg-white/10 my-1 mx-2" />
+              <Link
+                to="/"
+                className="text-left px-4 py-2 text-red-400 hover:bg-white/10 hover:!text-red-500 transition w-full"
+                onClick={() => {
+                  setDropdownOpen(false);
+                  logoutUser();
+                }}
+              >
+                Cerrar sesión
+              </Link>
+            </div>
+          )}
+        </div>
+      )}
+
     </nav>
   );
 }
