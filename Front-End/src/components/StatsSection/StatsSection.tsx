@@ -1,8 +1,10 @@
-import { BookOpen, Headphones, Star, TrendingUp } from "lucide-react";
+import { BookOpen, Star, TrendingUp } from "lucide-react";
 import { useMyBooks } from "../../context/MyBooksContext";
 
 export default function StatsSection() {
-    const { myBooks } = useMyBooks();
+    const { myBooks, getMostReadBook, getBooksSavedLastMonth } = useMyBooks();
+    const mostRead = getMostReadBook();
+    const booksSavedLastMonth = getBooksSavedLastMonth();
 
     const stats = [
         {
@@ -13,25 +15,18 @@ export default function StatsSection() {
             bg: "bg-cyan-500/10",
             border: "border-cyan-500/20",
         },
+
         {
-            label: "Audiolibros",
-            value: 0, // Mock
-            icon: Headphones,
-            color: "text-purple-400",
-            bg: "bg-purple-500/10",
-            border: "border-purple-500/20",
-        },
-        {
-            label: "Valoraciones",
-            value: 12, // Mock
+            label: "Libros Guardados (Último Mes)",
+            value: booksSavedLastMonth,
             icon: Star,
             color: "text-yellow-400",
             bg: "bg-yellow-500/10",
             border: "border-yellow-500/20",
         },
         {
-            label: "Último Leído",
-            value: "Don Quijote", // Mock
+            label: "Más Leído",
+            value: mostRead ? mostRead.title : "N/A",
             icon: TrendingUp,
             color: "text-green-400",
             bg: "bg-green-500/10",

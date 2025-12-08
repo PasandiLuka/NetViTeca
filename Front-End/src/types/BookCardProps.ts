@@ -1,9 +1,10 @@
 export interface BookCardProps {
+    id: number
     image: string
     title: string
     author: string
     description: string
-    audio?: boolean;
+
     onClick?: () => void
     onAdd?: () => void
     onDelete?: () => void

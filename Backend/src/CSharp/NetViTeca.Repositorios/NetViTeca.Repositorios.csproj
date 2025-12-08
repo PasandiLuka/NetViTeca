@@ -4,7 +4,11 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <NoWarn> CS8618 </NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NetViTeca.Core\NetViTeca.Core.csproj" />
+    <ProjectReference Include="..\NetViTeca.Data\NetViTeca.Data.csproj" />
+  </ItemGroup>
 
 </Project>

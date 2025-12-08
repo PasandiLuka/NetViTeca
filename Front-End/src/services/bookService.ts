@@ -9,6 +9,7 @@ export interface Book {
     image: string;
     url?: string;
     genre: string;
+    addedAt?: string;
 }
 
 const BOOKS_KEY = 'netviteca_books';

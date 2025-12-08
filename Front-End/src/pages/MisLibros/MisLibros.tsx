@@ -60,12 +60,11 @@ const MisLibros = () => {
 
   return (
     <div className="p-8">
-      <h1 className="text-3xl font-bold text-white mb-8">Mis Libros</h1>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         {myBooks.map((book) => (
           <BookCard
             key={book.id}
+            id={book.id}
             image={book.image}
             title={book.title}
             author={book.author}
@@ -78,56 +77,58 @@ const MisLibros = () => {
       </div>
 
       {/* DELETE CONFIRMATION MODAL */}
-      {deleteModalOpen && bookToDelete && (
-        <div
-          className="
+      {
+        deleteModalOpen && bookToDelete && (
+          <div
+            className="
             fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50
             animate-fadeIn
           "
-        >
-          <div className="
+          >
+            <div className="
             bg-black/60 rounded-xl border border-white/10 p-8 w-[90%] max-w-md
             shadow-[0_0_40px_rgba(255,50,50,0.4)]
             text-center
           ">
-            <h2 className="text-2xl text-white font-bold mb-4">¿Eliminar Libro?</h2>
+              <h2 className="text-2xl text-white font-bold mb-4">¿Eliminar Libro?</h2>
 
-            <p className="text-gray-300 mb-2">
-              Vas a eliminar <span className="text-cyan-400 font-semibold">{bookToDelete.title}</span> de tu biblioteca.
-            </p>
-            <p className="text-gray-400 text-sm mb-6">
-              Esta acción no se puede deshacer (a menos que lo agregues de nuevo desde el catálogo).
-            </p>
+              <p className="text-gray-300 mb-2">
+                Vas a eliminar <span className="text-cyan-400 font-semibold">{bookToDelete.title}</span> de tu biblioteca.
+              </p>
+              <p className="text-gray-400 text-sm mb-6">
+                Esta acción no se puede deshacer (a menos que lo agregues de nuevo desde el catálogo).
+              </p>
 
-            <div className="flex flex-col gap-3">
-              <button
-                onClick={confirmDelete}
-                className="
+              <div className="flex flex-col gap-3">
+                <button
+                  onClick={confirmDelete}
+                  className="
                     w-full py-2 rounded-lg font-semibold text-white
                     bg-red-600 
                     hover:bg-red-500 hover:text-white
                     active:scale-[0.97] transition-all
                     shadow-lg shadow-red-500/20
                 "
-              >
-                Sí, eliminar
-              </button>
+                >
+                  Sí, eliminar
+                </button>
 
-              <button
-                className="
+                <button
+                  className="
                     w-full py-2 rounded-lg font-semibold text-gray-300
                     hover:text-white hover:bg-white/10
                     transition-all
                 "
-                onClick={() => setDeleteModalOpen(false)}
-              >
-                Cancelar
-              </button>
+                  onClick={() => setDeleteModalOpen(false)}
+                >
+                  Cancelar
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )
+      }
+    </div >
   );
 };
 

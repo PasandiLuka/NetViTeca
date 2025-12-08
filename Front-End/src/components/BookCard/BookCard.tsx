@@ -1,11 +1,13 @@
 import type { BookCardProps } from "@/types/BookCardProps";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useMyBooks } from "../../context/MyBooksContext";
 
 
 
-export default function BookCard({ image, title, author, description, audio, onAdd, onDelete, url }: BookCardProps) {
+export default function BookCard({ id, image, title, author, description, onAdd, onDelete, url }: BookCardProps) {
   const [openModal, setOpenModal] = useState(false);
+  const { incrementReadCount } = useMyBooks();
 
   return (
     <>
@@ -32,11 +34,7 @@ export default function BookCard({ image, title, author, description, audio, onA
           />
 
           {/* Badges */}
-          {audio && (
-            <span className="absolute top-2 left-2 bg-cyan-500/80 text-white text-xs px-2 py-1 rounded-md font-bold shadow-lg">
-              🎧 Audiolibro
-            </span>
-          )}
+
 
           {/* Botón Eliminar en la tarjeta (antes de presionar) */}
           {onDelete && (
@@ -110,7 +108,7 @@ export default function BookCard({ image, title, author, description, audio, onA
 
             <p className="text-gray-200 text-center">{description}</p>
 
-            {audio && <p className="text-cyan-300 text-sm mt-3 text-center">🎧 Disponible en audiolibro</p>}
+
 
             {onAdd && (
               <button
@@ -131,6 +129,8 @@ export default function BookCard({ image, title, author, description, audio, onA
             {url && (
               <Link
                 to={url}
+                target="_blank"
+                onClick={() => incrementReadCount(id)}
                 className="
                   block w-full mt-3 py-2 rounded-lg font-semibold text-center
                   bg-cyan-600 hover:bg-cyan-500 transition-all duration-300

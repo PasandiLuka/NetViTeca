@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import BookCard from "../../components/BookCard/BookCard";
 import GenreFilter from "../../components/GenreFilter/GenreFilter";
 import { getBooks, type Book } from "../../services/bookService";
-// import { getSession } from "../../utils/Auth"; // No se está usando por ahora
-
 import { useMyBooks } from "../../context/MyBooksContext";
 
 const Catalogo = () => {
@@ -59,7 +57,7 @@ const Catalogo = () => {
       <div className="flex flex-col md:flex-row justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-white mb-4 md:mb-0">Catálogo de Libros</h1>
         <GenreFilter
-          genres={Array.from(new Set(books.map((book) => book.genre))).filter(Boolean).sort()} // Extract unique existing genres
+          genres={Array.from(new Set(books.map((book) => book.genre))).filter(Boolean).sort()}
           selectedGenre={selectedGenre}
           onSelectGenre={setSelectedGenre}
         />
@@ -71,6 +69,7 @@ const Catalogo = () => {
           .map((book) => (
             <BookCard
               key={book.id}
+              id={book.id}
               image={book.image}
               title={book.title}
               author={book.author}

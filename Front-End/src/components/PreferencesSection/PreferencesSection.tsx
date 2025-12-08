@@ -65,12 +65,27 @@ export default function PreferencesSection() {
                                 <p className="text-xs text-gray-500">Novedades y alertas</p>
                             </div>
                         </div>
-                        {/* Switch Toggle Mock */}
+                        {/* Switch Toggle Profesional */}
                         <button
                             onClick={() => setNotifications(!notifications)}
-                            className={`w-10 h-6 rounded-full p-1 transition-colors duration-300 ${notifications ? "bg-green-500" : "bg-gray-600"}`}
+                            className={`
+                                relative w-11 h-6 rounded-full flex items-center transition-all duration-300
+                                ${notifications 
+                                    ? "bg-green-500/80 shadow-[0_0_12px_rgba(0,255,120,0.55)]" 
+                                    : "bg-red-500/70 shadow-[0_0_12px_rgba(255,80,80,0.55)]"
+                                }
+                                hover:brightness-110
+                            `}
                         >
-                            <div className={`w-4 h-4 rounded-full bg-white shadow-sm transform transition-transform duration-300 ${notifications ? "translate-x-4" : "translate-x-0"}`} />
+                            <span
+                                className={`
+                                    w-3.5 h-3.5 rounded-full bg-white shadow-sm transition-all duration-300
+                                    ${notifications 
+                                        ? "translate-x-3 opacity-100" 
+                                        : "translate-x-1 opacity-90"
+                                    }
+                                `}
+                            />
                         </button>
                     </div>
 
