@@ -10,9 +10,9 @@ public class BibliotecaConfig : IEntityTypeConfiguration<Biblioteca>
     {
         builder.ToTable("Biblioteca");
 
-        builder.HasKey(b => new { b.idLibro, b.idUsuario });
+        builder.HasKey(b => new { b.BookId, b.UserId });
 
-        builder.HasOne(l => l.Libros);
-        builder.HasOne(u => u.Usuarios);
+        builder.HasOne(l => l.Book);
+        builder.HasOne(u => u.User);
     }
 }

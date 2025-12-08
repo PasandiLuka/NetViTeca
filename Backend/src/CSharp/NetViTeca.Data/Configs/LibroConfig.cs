@@ -10,39 +10,49 @@ public class LibroConfig : IEntityTypeConfiguration<Libro>
           {
                  builder.ToTable("Libro");
 
-                 builder.HasKey(l => l.idLibro);
+                 builder.HasKey(l => l.Id);
 
-                 builder.HasOne(l => l.genero)              // Libro tiene un Genero
-                        .WithMany(g => g.libros)            // Genero puede estar en muchos Libros (no necesitamos la colección)
-                        .HasForeignKey(g => g.idGenero)     // la FK está en idGenero
+                 builder.HasOne(l => l.Genre)              // Libro tiene un Genero
+                        .WithMany(g => g.Books)            // Genero puede estar en muchos Libros (no necesitamos la colección)
+                        .HasForeignKey(l => l.GenreId)     // la FK está en idGenero
                         .IsRequired()                       // relación obligatoria (no null)
                         .OnDelete(DeleteBehavior.Cascade);
 
-                 builder.Property(l => l.titulo)
+                 builder.Property(l => l.Title)
                         .HasColumnType("varchar(45)")
                         .HasMaxLength(45)
                         .IsRequired();
 
-                 builder.HasIndex(l => l.titulo)
+                 builder.HasIndex(l => l.Title)
                          .IsUnique()
                          .HasDatabaseName("IX_Libro_Titulo");
 
-                 builder.Property(l => l.editorial)
+                 builder.Property(l => l.Editorial)
                         .HasColumnType("varchar(45)")
                         .HasMaxLength(45)
                         .IsRequired();
 
-                 builder.Property(l => l.autor)
+                 builder.Property(l => l.Author)
                         .HasColumnType("varchar(45)")
                         .HasMaxLength(45)
                         .IsRequired();
 
-                 builder.Property(l => l.fechaCreacion)
+                 builder.Property(l => l.CreatedAt)
                         .HasColumnType("datetime")
                         .IsRequired();
 
-                 builder.Property(l => l.cantidadPaginas)
+                 builder.Property(l => l.PageCount)
                         .HasColumnType("int")
                         .IsRequired();
+
+                 builder.Property(l => l.Description)
+                        .HasColumnType("varchar(500)") // Assuming a reasonable length
+                        .HasMaxLength(500);
+
+                 builder.Property(l => l.Image)
+                        .HasColumnType("varchar(255)");
+
+                 builder.Property(l => l.Url)
+                        .HasColumnType("varchar(255)");
     }
 }

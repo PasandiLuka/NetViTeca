@@ -30,9 +30,9 @@ public static class LibroEndpoints
         /// Obtiene los libros que YA TIENE el usuario (Su biblioteca personal).
         /// URL: GET /api/libros/usuario/{idUsuario}
         /// </summary>
-        group.MapGet("/usuario/{idUsuario}", async (int idUsuario, ILibroService service) =>
+        group.MapGet("/usuario/{userId}", async (int userId, ILibroService service) =>
         {
-            var result = await service.ObtenerLibrosUsuario(idUsuario);
+            var result = await service.ObtenerLibrosUsuario(userId);
             return result.ToMinimalResult();
         })
         .WithName("GetLibrosUsuario")
@@ -42,9 +42,9 @@ public static class LibroEndpoints
         /// Obtiene los libros DISPONIBLES (Que NO tiene el usuario).
         /// URL: GET /api/libros/disponibles/{idUsuario}
         /// </summary>
-        group.MapGet("/disponibles/{idUsuario}", async (int idUsuario, [FromQuery] string? filtro, ILibroService service) =>
+        group.MapGet("/disponibles/{userId}", async (int userId, [FromQuery] string? filter, ILibroService service) =>
         {
-            var result = await service.ObtenerLibrosDisponibles(idUsuario, filtro);
+            var result = await service.ObtenerLibrosDisponibles(userId, filter);
             return result.ToMinimalResult();
         })
         .WithName("GetLibrosDisponibles")

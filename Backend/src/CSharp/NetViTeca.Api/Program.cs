@@ -25,7 +25,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("PermitirFrontend",
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000")
+            policy.WithOrigins("http://localhost:5173")
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
@@ -57,7 +57,10 @@ builder.Services.AddScoped<IBibliotecaService, BibliotecaService>();
 builder.Services.AddScoped<IGeneroService, GeneroService>();
 builder.Services.AddScoped<ILibroService, LibroService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
+
+builder.WebHost.UseUrls("http://*:5017");
 
 var app = builder.Build();
 

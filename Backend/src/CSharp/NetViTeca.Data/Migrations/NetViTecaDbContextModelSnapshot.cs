@@ -24,35 +24,35 @@ namespace NetViTeca.Data.Migrations
 
             modelBuilder.Entity("NetViTeca.Core.Models.Biblioteca", b =>
                 {
-                    b.Property<int>("idLibro")
+                    b.Property<int>("BookId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("idUsuario")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("idLibro", "idUsuario");
+                    b.HasKey("BookId", "UserId");
 
-                    b.HasIndex("idUsuario");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Biblioteca", (string)null);
                 });
 
             modelBuilder.Entity("NetViTeca.Core.Models.Genero", b =>
                 {
-                    b.Property<int?>("idGenero")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int?>("idGenero"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int?>("Id"));
 
-                    b.Property<string>("genero")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(45)
                         .HasColumnType("varchar(45)");
 
-                    b.HasKey("idGenero");
+                    b.HasKey("Id");
 
-                    b.HasIndex("genero")
+                    b.HasIndex("Name")
                         .IsUnique()
                         .HasDatabaseName("IX_Genero_genero");
 
@@ -61,42 +61,55 @@ namespace NetViTeca.Data.Migrations
 
             modelBuilder.Entity("NetViTeca.Core.Models.Libro", b =>
                 {
-                    b.Property<int>("idLibro")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("idLibro"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("autor")
+                    b.Property<string>("Author")
                         .IsRequired()
                         .HasMaxLength(45)
                         .HasColumnType("varchar(45)");
 
-                    b.Property<int>("cantidadPaginas")
-                        .HasColumnType("int");
-
-                    b.Property<string>("editorial")
-                        .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("varchar(45)");
-
-                    b.Property<DateTime>("fechaCreacion")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime");
 
-                    b.Property<int?>("idGenero")
+                    b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("int");
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
 
-                    b.Property<string>("titulo")
+                    b.Property<string>("Editorial")
                         .IsRequired()
                         .HasMaxLength(45)
                         .HasColumnType("varchar(45)");
 
-                    b.HasKey("idLibro");
+                    b.Property<int?>("GenreId")
+                        .IsRequired()
+                        .HasColumnType("int");
 
-                    b.HasIndex("idGenero");
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
 
-                    b.HasIndex("titulo")
+                    b.Property<int>("PageCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("varchar(45)");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GenreId");
+
+                    b.HasIndex("Title")
                         .IsUnique()
                         .HasDatabaseName("IX_Libro_Titulo");
 
@@ -105,39 +118,42 @@ namespace NetViTeca.Data.Migrations
 
             modelBuilder.Entity("NetViTeca.Core.Models.Usuario", b =>
                 {
-                    b.Property<int>("idUsuario")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("idUsuario"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("contrasena")
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("varchar(45)");
+
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("correo")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<string>("nombreCompleto")
+                    b.Property<string>("Phone")
                         .IsRequired()
                         .HasMaxLength(45)
                         .HasColumnType("varchar(45)");
 
-                    b.Property<string>("nombreUsuario")
+                    b.Property<bool>("ReceiveNotifications")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(45)
                         .HasColumnType("varchar(45)");
 
-                    b.Property<string>("numeroTelefono")
-                        .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("varchar(45)");
+                    b.HasKey("Id");
 
-                    b.HasKey("idUsuario");
-
-                    b.HasIndex("nombreUsuario")
+                    b.HasIndex("Username")
                         .IsUnique()
                         .HasDatabaseName("IX_Usuario_NombreUsuario");
 
@@ -146,37 +162,37 @@ namespace NetViTeca.Data.Migrations
 
             modelBuilder.Entity("NetViTeca.Core.Models.Biblioteca", b =>
                 {
-                    b.HasOne("NetViTeca.Core.Models.Libro", "Libros")
+                    b.HasOne("NetViTeca.Core.Models.Libro", "Book")
                         .WithMany()
-                        .HasForeignKey("idLibro")
+                        .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("NetViTeca.Core.Models.Usuario", "Usuarios")
+                    b.HasOne("NetViTeca.Core.Models.Usuario", "User")
                         .WithMany()
-                        .HasForeignKey("idUsuario")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Libros");
+                    b.Navigation("Book");
 
-                    b.Navigation("Usuarios");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("NetViTeca.Core.Models.Libro", b =>
                 {
-                    b.HasOne("NetViTeca.Core.Models.Genero", "genero")
-                        .WithMany("libros")
-                        .HasForeignKey("idGenero")
+                    b.HasOne("NetViTeca.Core.Models.Genero", "Genre")
+                        .WithMany("Books")
+                        .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("genero");
+                    b.Navigation("Genre");
                 });
 
             modelBuilder.Entity("NetViTeca.Core.Models.Genero", b =>
                 {
-                    b.Navigation("libros");
+                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }

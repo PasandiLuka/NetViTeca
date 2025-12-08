@@ -10,32 +10,32 @@ public class UsuarioConfig : IEntityTypeConfiguration<Usuario>
     {
         builder.ToTable("Usuario");
 
-        builder.HasKey(u => u.idUsuario);
+        builder.HasKey(u => u.Id);
 
-        builder.Property(u => u.nombreCompleto)
+        builder.Property(u => u.FullName)
                 .HasColumnType("varchar(45)")
                 .HasMaxLength(45)
                 .IsRequired();
 
-        builder.Property(u => u.nombreUsuario)
+        builder.Property(u => u.Username)
                 .HasColumnType("varchar(45)")
                 .HasMaxLength(45)
                 .IsRequired();
 
-        builder.HasIndex(u => u.nombreUsuario)
+        builder.HasIndex(u => u.Username)
                 .IsUnique()
                 .HasDatabaseName("IX_Usuario_NombreUsuario");
 
-        builder.Property(u => u.correo)
+        builder.Property(u => u.Email)
                 .HasColumnType("varchar(100)")
                 .IsRequired();
 
-        builder.Property(u => u.contrasena)
+        builder.Property(u => u.Password)
                 .HasColumnType("varchar(255)")
                 .HasMaxLength(255)
                 .IsRequired();
 
-        builder.Property(u => u.numeroTelefono)
+        builder.Property(u => u.Phone)
                 .HasColumnType("varchar(45)")
                 .HasMaxLength(45);
     }

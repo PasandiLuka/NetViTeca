@@ -24,10 +24,11 @@ public class RepoBiblioteca : RepoBaseAdo, IRepoBiblioteca
     }
 
     /// <inheritdoc />
-    public async Task<bool> RetirarLibroAUsuario(int idLibro, int idUsuario)
+    /// <inheritdoc />
+    public async Task<bool> RetirarLibroAUsuario(int bookId, int userId)
     {
         // Buscamos el registro usando la clave compuesta (idLibro, idUsuario)
-        var registro = await _context.Bibliotecas.FindAsync(idLibro, idUsuario);
+        var registro = await _context.Bibliotecas.FindAsync(bookId, userId);
 
         if (registro == null)
         {

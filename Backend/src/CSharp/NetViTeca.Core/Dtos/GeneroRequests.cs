@@ -6,5 +6,5 @@ namespace NetViTeca.Core.Dtos;
 public class AltaGeneroRequest
 {
     /// <summary>Nombre del género a crear.</summary>
-    public string genero { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
 }

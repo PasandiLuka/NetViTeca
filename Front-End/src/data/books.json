@@ -1,0 +1,74 @@
+[
+    {
+        "id": 1,
+        "title": "Don Quijote de la Mancha",
+        "author": "Miguel de Cervantes",
+        "description": "El ingenioso hidalgo don Quijote de la Mancha narra las aventuras de un hidalgo pobre que, de tanto leer novelas de caballería, acaba enloqueciendo y creyendo ser un caballero andante real.",
+        "image": "/DonQuijote.png",
+        "url": "https://cvc.cervantes.es/literatura/lee/coleccion/pdf/quijote.pdf",
+        "genre": "Clásico"
+    },
+    {
+        "id": 2,
+        "title": "Cien años de soledad",
+        "author": "Gabriel García Márquez",
+        "description": "La novela narra la historia de la familia Buendía a lo largo de siete generaciones en el pueblo ficticio de Macondo.",
+        "image": "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=800",
+        "url": "https://www.secst.cl/upfiles/documentos/19072016_1207am_578dc39115fe9.pdf",
+        "genre": "Realismo Mágico"
+    },
+    {
+        "id": 3,
+        "title": "El Principito",
+        "author": "Antoine de Saint-Exupéry",
+        "description": "Un piloto se encuentra perdido en el desierto del Sahara luego de que su avión sufriera una avería, pero para su sorpresa, es allí donde conoce a un pequeño príncipe proveniente de otro planeta.",
+        "image": "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&q=80&w=800",
+        "url": "https://digitales.bcn.gob.ar/files/textos/El-Principitocompleto.pdf",
+        "genre": "Infantil"
+    },
+    {
+        "id": 4,
+        "title": "1984",
+        "author": "George Orwell",
+        "description": "Una novela política de ficción distópica, escrita por George Orwell entre 1947 y 1948 y publicada el 8 de junio de 1949.",
+        "image": "https://images.unsplash.com/photo-1531901599143-df5010ab9438?auto=format&fit=crop&q=80&w=800",
+        "url": "https://www.philosophia.cl/biblioteca/orwell/1984.pdf",
+        "genre": "Ciencia Ficción"
+    },
+    {
+        "id": 5,
+        "title": "Orgullo y prejuicio",
+        "author": "Jane Austen",
+        "description": "Es una novela de desarrollo personal, en la que las dos figuras principales, Elizabeth Bennet y Fitzwilliam Darcy, cada uno a su manera y, no obstante, de forma muy parecida, deben madurar para superar algunas crisis.",
+        "image": "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&q=80&w=800",
+        "url": "https://web.seducoahuila.gob.mx/biblioweb/upload/orgullo_y_prejuicio.pdf",
+        "genre": "Novela"
+    },
+    {
+        "id": 6,
+        "title": "Crónica de una muerte anunciada",
+        "author": "Gabriel García Márquez",
+        "description": "Relata en forma de reconstrucción casi periodística el asesinato de Santiago Nasar a manos de los gemelos Vicario.",
+        "image": "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800",
+        "url": "https://unisinucartagena.edu.co/wp-content/uploads/2020/07/Cronica_de_una_Muerte_Anunciada-Gabriel_Garcia_Marquez.pdf",
+        "genre": "Novela"
+    },
+    {
+        "id": 7,
+        "title": "El Hobbit",
+        "author": "J.R.R. Tolkien",
+        "description": "La historia se desarrolla en la Tercera Edad del Sol y narra el viaje del hobbit Bilbo Bolsón junto al mago Gandalf y un grupo de enanos.",
+        "image": "https://images.unsplash.com/photo-1621351183012-e2f99720b9bd?auto=format&fit=crop&q=80&w=800",
+        "url": "https://web.seducoahuila.gob.mx/biblioweb/upload/J.R.R.%20Tolkien%20-%20El%20Hobbit.pdf",
+        "genre": "Fantasía"
+    },
+    {
+        "id": 8,
+        "title": "Fahrenheit 451",
+        "author": "Ray Bradbury",
+        "description": "La novela presenta una sociedad futura en la que los libros están prohibidos y existen «bomberos» que queman cualquiera que encuentren.",
+        "image": "https://images.unsplash.com/photo-1476275466078-4007374efbbe?auto=format&fit=crop&q=80&w=800",
+        "url": "https://ciudadanoaustral.org/biblioteca/15.-Ray-Bradbury-Fahrenheit-451.pdf",
+        "genre": "Ciencia Ficción"
+    }
+]

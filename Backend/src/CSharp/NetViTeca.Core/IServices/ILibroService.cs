@@ -16,10 +16,10 @@ public interface ILibroService
     /// <summary>
     /// Obtiene los libros que un usuario ya tiene en su biblioteca personal.
     /// </summary>
-    Task<Result<List<Libro>>> ObtenerLibrosUsuario(int idUsuario);
+    Task<Result<List<Libro>>> ObtenerLibrosUsuario(int userId);
 
     /// <summary>
     /// Obtiene los libros disponibles que el usuario aún no posee, con filtrado opcional.
     /// </summary>
-    Task<Result<List<Libro>>> ObtenerLibrosDisponibles(int idUsuario, string? filtroTitulo);
+    Task<Result<List<Libro>>> ObtenerLibrosDisponibles(int userId, string? filterTitle);
 }

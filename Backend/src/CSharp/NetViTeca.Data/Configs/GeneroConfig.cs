@@ -10,14 +10,14 @@ public class GeneroConfig : IEntityTypeConfiguration<Genero>
     {
         builder.ToTable("Genero");
 
-        builder.HasKey(g => g.idGenero);
+        builder.HasKey(g => g.Id);
 
-        builder.Property(g => g.genero)
+        builder.Property(g => g.Name)
                .HasColumnType("varchar(45)")
                .HasMaxLength(45)
                .IsRequired();
 
-        builder.HasIndex(g => g.genero)
+        builder.HasIndex(g => g.Name)
                 .IsUnique()
                 .HasDatabaseName("IX_Genero_genero");
     }

@@ -4,35 +4,30 @@ namespace NetViTeca.Core.Models;
 
 public class Usuario
 {
-
     [Key]
-    public int idUsuario { get; set; }
+    public int Id { get; set; }
 
-    [Required(ErrorMessage = "El nombre completo es obligatorio.")]
+    [Required(ErrorMessage = "Full name is required.")]
     [StringLength(45)]
-    public string nombreCompleto { get; set; } = string.Empty;
+    public string FullName { get; set; } = string.Empty;
 
-    
-    [Required(ErrorMessage = "El nombre de usuario es obligatorio.")]
+    [Required(ErrorMessage = "Username is required.")]
     [StringLength(45)]
-    public string nombreUsuario { get; set; } = string.Empty;
+    public string Username { get; set; } = string.Empty;
 
+    [Required(ErrorMessage = "Email is required.")]
+    [EmailAddress(ErrorMessage = "Invalid email format.")]
+    public string Email { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "El correo es obligatorio.")]
-    [EmailAddress(ErrorMessage = "Formato de correo inválido.")]
-    public string correo { get; set; } = string.Empty;
+    [Required(ErrorMessage = "Password is required.")]
+    [StringLength(45, MinimumLength = 6, ErrorMessage = "Must be at least 6 characters.")]
+    public string Password { get; set; } = string.Empty;
 
-
-    [Required(ErrorMessage = "La contraseña es obligatoria.")]
-    [StringLength(45, MinimumLength = 6, ErrorMessage = "Debe tener al menos 6 caracteres.")]
-    public string contrasena { get; set; } = string.Empty;
-
-
-    [Phone(ErrorMessage = "Número de teléfono inválido.")]
+    [Phone(ErrorMessage = "Invalid phone number.")]
     [StringLength(45)]
-    public string numeroTelefono { get; set; } = string.Empty;
+    public string Phone { get; set; } = string.Empty;
 
+    public bool ReceiveNotifications { get; set; } = true;
 
     public Usuario() { }
-
 }

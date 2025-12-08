@@ -17,14 +17,15 @@ public class BibliotecaService : IBibliotecaService
     }
 
     /// <inheritdoc/>
-    public async Task<Result<List<Libro>>> ObtenerLibrosDisponibleTitulo(int idUsuario, string? filtroTitulo)
+    /// <inheritdoc/>
+    public async Task<Result<List<Libro>>> ObtenerLibrosDisponibleTitulo(int userId, string? filterTitle)
     {
-        var libros = await _repoLibro.LibrosNoEnBibliotecaUsuario(idUsuario);
+        var libros = await _repoLibro.LibrosNoEnBibliotecaUsuario(userId);
 
-        if (!string.IsNullOrEmpty(filtroTitulo))
+        if (!string.IsNullOrEmpty(filterTitle))
         {
-            filtroTitulo = filtroTitulo.ToLower();
-            libros = libros.Where(l => l.titulo.ToLower().Contains(filtroTitulo)).ToList();
+            filterTitle = filterTitle.ToLower();
+            libros = libros.Where(l => l.Title.ToLower().Contains(filterTitle)).ToList();
         }
 
         if (libros.Any())
@@ -34,15 +35,15 @@ public class BibliotecaService : IBibliotecaService
     }
 
     /// <inheritdoc/>
-    public async Task<Result<bool>> RegistrarLibrosSeleccionados(int idUsuario, List<int> idsLibros)
+    public async Task<Result<bool>> RegistrarLibrosSeleccionados(int userId, List<int> bookIds)
     {
-        if (idsLibros == null || !idsLibros.Any())
+        if (bookIds == null || !bookIds.Any())
             return Result<bool>.BadRequest("La lista de libros no puede estar vacía.");
 
-        var nuevosRegistros = idsLibros.Select(idLibro => new Biblioteca
+        var nuevosRegistros = bookIds.Select(id => new Biblioteca
         {
-            idUsuario = idUsuario,
-            idLibro = idLibro
+            UserId = userId,
+            BookId = id
         }).ToList();
 
         await _repoBiblioteca.AsignarLibrosAUsuario(nuevosRegistros);
@@ -51,14 +52,14 @@ public class BibliotecaService : IBibliotecaService
     }
 
     /// <inheritdoc />
-    public async Task<Result<bool>> RetirarLibroAUsuario(int idLibro, int idUsuario)
+    public async Task<Result<bool>> RetirarLibroAUsuario(int bookId, int userId)
     {
-        if (idLibro <= 0 || idUsuario <= 0)
+        if (bookId <= 0 || userId <= 0)
         {
             return Result<bool>.BadRequest("Los IDs de usuario y libro deben ser valores positivos.");
         }
 
-        var success = await _repoBiblioteca.RetirarLibroAUsuario(idLibro, idUsuario);
+        var success = await _repoBiblioteca.RetirarLibroAUsuario(bookId, userId);
 
         if (!success)
         {

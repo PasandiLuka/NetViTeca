@@ -9,15 +9,19 @@ public class UsuarioResponseDTO
     /// <summary>
     /// Id del usuario
     /// </summary>
-    public int idUsuario { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     /// Nombre de usuario único.
     /// </summary>
-    public string nombreUsuario { get; set; } = string.Empty;
+    public string Username { get; set; } = string.Empty;
 
     /// <summary>
     /// Correo electrónico del usuario.
     /// </summary>
-    public string correo { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+
+    public string FullName { get; set; } = string.Empty;
+
+    public string Phone { get; set; } = string.Empty;
 }

@@ -5,10 +5,13 @@ namespace NetViTeca.Core.Dtos;
 /// </summary>
 public class AltaLibroRequest
 {
-    public int IdGenero { get; set; }
-    public string Titulo { get; set; } = string.Empty;
+    public int GenreId { get; set; }
+    public string Title { get; set; } = string.Empty;
     public string Editorial { get; set; } = string.Empty;
-    public string Autor { get; set; } = string.Empty;
-    public DateTime FechaCreacion { get; set; }
-    public int CantidadPaginas { get; set; }
+    public string Author { get; set; } = string.Empty;
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public int PageCount { get; set; }
+    public string Description { get; set; } = string.Empty;
+    public string Image { get; set; } = string.Empty;
+    public string Url { get; set; } = string.Empty;
 }

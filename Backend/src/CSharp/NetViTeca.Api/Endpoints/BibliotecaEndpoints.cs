@@ -20,7 +20,7 @@ public static class BibliotecaEndpoints
         /// </summary>
         group.MapPost("/", async ([FromBody] AsignarLibrosRequest request, IBibliotecaService service) =>
         {
-            var result = await service.RegistrarLibrosSeleccionados(request.IdUsuario, request.IdsLibros);
+            var result = await service.RegistrarLibrosSeleccionados(request.UserId, request.BookIds);
             return result.ToMinimalResult();
         })
         .WithName("AsignarLibros") // El nombre interno
@@ -28,11 +28,11 @@ public static class BibliotecaEndpoints
 
         /// <summary>
         /// Elimina una asignación (retira un libro de la biblioteca de un usuario).
-        /// URL: DELETE /api/bibliotecas/{idUsuario}/{idLibro}
+        /// URL: DELETE /api/bibliotecas/{userId}/{bookId}
         /// </summary>
-        group.MapDelete("/{idUsuario}/{idLibro}", async (int idUsuario, int idLibro, IBibliotecaService service) =>
+        group.MapDelete("/{userId}/{bookId}", async (int userId, int bookId, IBibliotecaService service) =>
         {
-            var result = await service.RetirarLibroAUsuario(idLibro, idUsuario);
+            var result = await service.RetirarLibroAUsuario(bookId, userId);
             return result.ToMinimalResult();
         })
         .WithName("RetirarLibroUsuario")

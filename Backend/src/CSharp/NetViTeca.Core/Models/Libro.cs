@@ -4,32 +4,33 @@ namespace NetViTeca.Core.Models;
 
 public class Libro
 {
-    public int idLibro { get; set; } = 0;
+    [Key]
+    public int Id { get; set; }
 
+    [Required(ErrorMessage = "The genre is required.")]
+    public int? GenreId { get; set; }
 
-    [Required(ErrorMessage = "Debes elegir un género.")]
-    public int? idGenero { get; set; }
+    public Genero Genre { get; set; }
 
+    [Required(ErrorMessage = "The title is required.")]
+    public string Title { get; set; }
 
-    public Genero genero { get; set; }
+    [Required(ErrorMessage = "The editorial is required.")]
+    public string Editorial { get; set; }
 
+    [Required(ErrorMessage = "The author is required.")]
+    public string Author { get; set; }
 
-    [Required(ErrorMessage = "El titulo es obligatorio.")]
-    public string titulo { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
 
+    [Required(ErrorMessage = "The page count is required.")]
+    [Range(1, int.MaxValue, ErrorMessage = "Page count must be greater than 1")]
+    public int PageCount { get; set; }
 
-    [Required(ErrorMessage = "La editorial es obligatoria.")]
-    public string editorial { get; set; }
+    // New Fields
+    public string Description { get; set; } = string.Empty;
 
+    public string Image { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "El autor es obligatorio.")]
-    public string autor { get; set; }
-
-
-    public DateTime fechaCreacion { get; set; }
-
-
-    [Required(ErrorMessage = "La cantidad paginas es obligatoria.")]
-    [Range(1, int.MaxValue, ErrorMessage = "La cantidad de paginas tiene que ser mayor a 1")]
-    public int cantidadPaginas { get; set; }
+    public string Url { get; set; } = string.Empty;
 }

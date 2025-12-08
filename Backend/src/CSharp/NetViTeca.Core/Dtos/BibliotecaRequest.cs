@@ -6,8 +6,8 @@ namespace NetViTeca.Core.Dtos;
 public class AsignarLibrosRequest
 {
     /// <summary>Identificador del usuario al que se le asignarán los libros.</summary>
-    public int IdUsuario { get; set; }
+    public int UserId { get; set; }
 
     /// <summary>Lista de IDs de los libros a asignar.</summary>
-    public List<int> IdsLibros { get; set; } = new();
+    public List<int> BookIds { get; set; } = new();
 }

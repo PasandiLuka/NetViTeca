@@ -19,25 +19,26 @@ public class UsuarioService : IUsuarioService
     }
 
     /// <inheritdoc/>
+    /// <inheritdoc/>
     public async Task<Result<UsuarioResponseDTO>> CrearUsuario(UsuarioCreacionRequestDTO request)
     {
         // 1. Mapeo del DTO de Solicitud a la entidad de dominio
         var nuevoUsuario = new Usuario
         {
-            nombreCompleto = request.nombreCompleto,
-            nombreUsuario = request.nombreUsuario,
-            correo = request.correo,
-            contrasena = PasswordUtils.HashPassword(request.contrasena), 
-            numeroTelefono = request.telefono
+            FullName = request.FullName,
+            Username = request.Username,
+            Email = request.Email,
+            Password = PasswordUtils.HashPassword(request.Password), 
+            Phone = request.Phone
         };
 
         // 2. Lógica de negocio: Verificar duplicados
-        if (await _repoUsuario.UsuarioExiste(nuevoUsuario.nombreUsuario))
+        if (await _repoUsuario.UsuarioExiste(nuevoUsuario.Username))
         {
-            return Result<UsuarioResponseDTO>.BadRequest($"El nombre de usuario '{nuevoUsuario.nombreUsuario}' ya está en uso.");
+            return Result<UsuarioResponseDTO>.BadRequest($"El nombre de usuario '{nuevoUsuario.Username}' ya está en uso.");
         }
 
-        if (await _repoUsuario.CorreoExiste(nuevoUsuario.correo))
+        if (await _repoUsuario.CorreoExiste(nuevoUsuario.Email))
         {
             return Result<UsuarioResponseDTO>.BadRequest("El correo electrónico ya está registrado.");
         }
@@ -53,13 +54,13 @@ public class UsuarioService : IUsuarioService
     }
 
     /// <inheritdoc/>
-    public async Task<Result<UsuarioResponseDTO>> AutenticarUsuario(string correo, string contrasena)
+    public async Task<Result<UsuarioResponseDTO>> AutenticarUsuario(string email, string password)
     {
         // 1. Obtener el usuario por correo
-        var usuario = await _repoUsuario.ObtenerUsuarioPorCorreo(correo);
+        var usuario = await _repoUsuario.ObtenerUsuarioPorCorreo(email);
 
         // 2. Verificar existencia y contraseña hasheada
-        if (usuario is null || !PasswordUtils.VerificarPassword(contrasena, usuario.contrasena))
+        if (usuario is null || !PasswordUtils.VerificarPassword(password, usuario.Password))
         {
             // Mensaje genérico para no dar pistas sobre si el correo existe
             return Result<UsuarioResponseDTO>.BadRequest("Credenciales de usuario incorrectas.");
@@ -68,8 +69,24 @@ public class UsuarioService : IUsuarioService
         // 3. Mapeo a DTO de Respuesta antes de retornar (SOLO campos esenciales)
         var responseDto = MapearAUsuarioResponseDTO(usuario);
 
-        // 4. Éxito de la autenticación
         return Result<UsuarioResponseDTO>.Ok(responseDto);
+    }
+
+    /// <inheritdoc/>
+    public async Task<Result<UsuarioResponseDTO>> ActualizarUsuario(int id, UsuarioActualizacionRequestDTO request)
+    {
+        var usuario = await _repoUsuario.ObtenerUsuarioPorId(id);
+        if (usuario == null)
+        {
+            return Result<UsuarioResponseDTO>.NotFound($"Usuario con ID {id} no encontrado.");
+        }
+
+        usuario.FullName = request.FullName;
+        usuario.Phone = request.Phone;
+
+        await _repoUsuario.ActualizarUsuario(usuario);
+
+        return Result<UsuarioResponseDTO>.Ok(MapearAUsuarioResponseDTO(usuario));
     }
 
     /// <summary>
@@ -81,10 +98,11 @@ public class UsuarioService : IUsuarioService
     {
         return new UsuarioResponseDTO
         {
-            // Mapeo simplificado
-            idUsuario = usuario.idUsuario,
-            nombreUsuario = usuario.nombreUsuario,
-            correo = usuario.correo
+            Id = usuario.Id,
+            Username = usuario.Username,
+            Email = usuario.Email,
+            FullName = usuario.FullName,
+            Phone = usuario.Phone
         };
     }
 }

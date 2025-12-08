@@ -2,10 +2,10 @@ namespace NetViTeca.Core.Models;
 
 public class Biblioteca
 {
-    public int idLibro { get; set; }
-    public int? idUsuario { get; set; }
+    public int BookId { get; set; }
+    public int? UserId { get; set; }
 
-    public Libro Libros { get; set; }
+    public Libro Book { get; set; }
 
-    public Usuario Usuarios { get; set; }
+    public Usuario User { get; set; }
 }

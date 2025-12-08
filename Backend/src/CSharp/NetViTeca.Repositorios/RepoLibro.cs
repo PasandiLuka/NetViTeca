@@ -22,26 +22,27 @@ public class RepoLibro : RepoBaseAdo, IRepoLibro
     }
 
     /// <inheritdoc />
-    public async Task<List<Libro>> LibrosEnBibliotecaUsuario(int idUsuario)
+    /// <inheritdoc />
+    public async Task<List<Libro>> LibrosEnBibliotecaUsuario(int userId)
     {
         // Fix: Query the 'Libros' table directly
         return await _context.Libros
-            .Include(l => l.genero) // 1. Apply Include directly on the Libro
+            .Include(l => l.Genre) // 1. Apply Include directly on the Libro
             .Where(l => _context.Bibliotecas
                 // 2. Filter: Check if this book ID exists in the Bibliotecas table for this user
-                .Any(b => b.idUsuario == idUsuario && b.idLibro == l.idLibro)) 
-            .OrderBy(l => l.idLibro)
+                .Any(b => b.UserId == userId && b.BookId == l.Id)) 
+            .OrderBy(l => l.Id)
             .ToListAsync();
     }
 
     /// <inheritdoc />
-    public async Task<List<Libro>> LibrosNoEnBibliotecaUsuario(int idUsuario)
+    public async Task<List<Libro>> LibrosNoEnBibliotecaUsuario(int userId)
     {
         // Trae los libros que NO tienen vinculo con el usuario
         return await _context.Libros
-            .Include(l => l.genero)
-            .Where(l => !_context.Bibliotecas.Any(b => b.idLibro == l.idLibro && b.idUsuario == idUsuario))
-            .OrderBy(l => l.idLibro)
+            .Include(l => l.Genre)
+            .Where(l => !_context.Bibliotecas.Any(b => b.BookId == l.Id && b.UserId == userId))
+            .OrderBy(l => l.Id)
             .ToListAsync();
     }
 }
