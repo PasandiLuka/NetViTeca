@@ -32,7 +32,7 @@ public class UsuarioConfig : IEntityTypeConfiguration<Usuario>
 
         builder.Property(u => u.contrasena)
                 .HasColumnType("varchar(255)")
-                .HasMaxLength(45)
+                .HasMaxLength(255)
                 .IsRequired();
 
         builder.Property(u => u.numeroTelefono)

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetViTeca.Data;
 
@@ -11,9 +12,11 @@ using NetViTeca.Data;
 namespace NetViTeca.Data.Migrations
 {
     [DbContext(typeof(NetViTecaDbContext))]
-    partial class NetViTecaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251207230752_CorregirLongitudContrasena")]
+    partial class CorregirLongitudContrasena
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

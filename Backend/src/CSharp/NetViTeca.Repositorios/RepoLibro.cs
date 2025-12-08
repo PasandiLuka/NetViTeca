@@ -24,11 +24,12 @@ public class RepoLibro : RepoBaseAdo, IRepoLibro
     /// <inheritdoc />
     public async Task<List<Libro>> LibrosEnBibliotecaUsuario(int idUsuario)
     {
-        // Trae los libros que están vinculados al usuario en la tabla Biblioteca
-        return await _context.Bibliotecas
-            .Where(b => b.idUsuario == idUsuario)
-            .Select(b => b.Libros)
-            .Include(l => l.genero)
+        // Fix: Query the 'Libros' table directly
+        return await _context.Libros
+            .Include(l => l.genero) // 1. Apply Include directly on the Libro
+            .Where(l => _context.Bibliotecas
+                // 2. Filter: Check if this book ID exists in the Bibliotecas table for this user
+                .Any(b => b.idUsuario == idUsuario && b.idLibro == l.idLibro)) 
             .OrderBy(l => l.idLibro)
             .ToListAsync();
     }

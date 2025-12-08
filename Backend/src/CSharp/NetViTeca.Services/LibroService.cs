@@ -45,7 +45,18 @@ public class LibroService : ILibroService
         var libros = await _repoLibro.LibrosEnBibliotecaUsuario(idUsuario);
 
         if (libros == null || !libros.Any())
-            return Result<List<Libro>>.NotFound("El usuario no tiene libros asignados.");
+            // Nota: Cambié NotFound por Ok con lista vacía para que el frontend no de error 404 si está vacía
+            return Result<List<Libro>>.Ok(new List<Libro>()); 
+
+        // --- ROMPER EL CICLO MANUALMENTE ---
+        foreach (var libro in libros)
+        {
+            if (libro.genero != null)
+            {
+                libro.genero.libros = null; // Cortamos la referencia circular aquí
+            }
+        }
+        // -----------------------------------
 
         return Result<List<Libro>>.Ok(libros);
     }
@@ -55,15 +66,24 @@ public class LibroService : ILibroService
     {
         var libros = await _repoLibro.LibrosNoEnBibliotecaUsuario(idUsuario);
 
-        // Lógica de filtrado en memoria
         if (!string.IsNullOrEmpty(filtroTitulo))
         {
             filtroTitulo = filtroTitulo.ToLower();
             libros = libros.Where(l => l.titulo.ToLower().Contains(filtroTitulo)).ToList();
         }
 
+        // --- ROMPER EL CICLO MANUALMENTE ---
+        foreach (var libro in libros)
+        {
+            if (libro.genero != null)
+            {
+                libro.genero.libros = null; // Cortamos la referencia circular aquí
+            }
+        }
+        // -----------------------------------
+
         if (!libros.Any())
-            return Result<List<Libro>>.NotFound("No hay libros disponibles con esos criterios.");
+             return Result<List<Libro>>.Ok(new List<Libro>()); // Retornar lista vacía es mejor que error
 
         return Result<List<Libro>>.Ok(libros);
     }

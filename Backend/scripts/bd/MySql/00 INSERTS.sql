@@ -1,6 +1,6 @@
 INSERT INTO Usuario (nombreCompleto, nombreUsuario, correo, contrasena, numeroTelefono) VALUES 
-('Lucca Pazanddi', 'LUKITA7956', 'lukita@gmail.com', 'luka1234', '1123456789'),
-('Sebaz Serpa', 'SEBITA7956', 'sebita@gmail.com', 'seba1234', '1231234324');
+('Lucca Pazanddi', 'LUKITA7956', 'lukita@gmail.com', Sha2('luka1234', 256), '1123456789'),
+('Sebaz Serpa', 'SEBITA7956', 'sebita@gmail.com', Sha2('seba1234', 256), '1231234324');
 
 INSERT INTO Genero (idGenero, genero) VALUES 
 (1, 'Fantasia'),

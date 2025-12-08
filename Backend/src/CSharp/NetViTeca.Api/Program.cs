@@ -10,8 +10,26 @@ using NetViTeca.Data.Repositorios;
 using NetViTeca.Core.Servicios;
 using NetViTeca.Api.Helper;
 
+using System.Text.Json.Serialization; // <--- AGREGAR ESTE IMPORT
+
 var builder = WebApplication.CreateBuilder(args);
 
+// --- AGREGAR ESTO PARA EVITAR EL ERROR DE CICLOS ---
+builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
+{
+    options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirFrontend",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -43,6 +61,8 @@ builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
 var app = builder.Build();
 
+app.UseCors("PermitirFrontend");
+
 const string sqlSeedPath = "../../../scripts/bd/MySql/00 INSERTS.sql"; // <-- RUTA AJUSTADA
 
 app.ApplyMigrationsAndSeed(sqlSeedPath); 
@@ -53,6 +73,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("PermitirFrontend");
 
 app.MapAllEndpoints();
 

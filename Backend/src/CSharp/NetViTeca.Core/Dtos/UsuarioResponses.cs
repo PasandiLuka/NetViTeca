@@ -7,6 +7,11 @@ namespace NetViTeca.Core.Dtos;
 public class UsuarioResponseDTO
 {
     /// <summary>
+    /// Id del usuario
+    /// </summary>
+    public int idUsuario { get; set; }
+
+    /// <summary>
     /// Nombre de usuario único.
     /// </summary>
     public string nombreUsuario { get; set; } = string.Empty;

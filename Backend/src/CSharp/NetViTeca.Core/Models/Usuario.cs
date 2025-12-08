@@ -6,7 +6,7 @@ public class Usuario
 {
 
     [Key]
-    public int? idUsuario { get; set; }
+    public int idUsuario { get; set; }
 
     [Required(ErrorMessage = "El nombre completo es obligatorio.")]
     [StringLength(45)]
