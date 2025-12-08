@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import "../../styles/Auth.css";
-import { loginUser, type User } from "../../utils/Auth";
 import { AuthContext } from "../../context/AuthContext";
 import { Eye, EyeOff } from "lucide-react";
 
@@ -10,29 +9,29 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [showPass, setShowPass] = useState(false);
     const [errors, setErrors] = useState<{ user?: string, pass?: string }>({});
-    const { user } = useContext(AuthContext);
+    const { user, login } = useContext(AuthContext);
     const navigate = useNavigate();
-    const { login } = useContext(AuthContext);
 
 
     useEffect(() => {
         if (user) navigate("/");
-        }, [user]);
+    }, [user]);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        let temp:any = {};
-        if(!usernameOrEmail.trim()) temp.user="Ingresa tu usuario o correo";
-        if(!password.trim()) temp.pass="Ingresa tu contraseña";
+        let temp: any = {};
+        if (!usernameOrEmail.trim()) temp.user = "Ingresa tu usuario o correo";
+        if (!password.trim()) temp.pass = "Ingresa tu contraseña";
         setErrors(temp);
-        if(Object.keys(temp).length>0) return;
+        if (Object.keys(temp).length > 0) return;
 
-        const res = loginUser(usernameOrEmail,password);
-
-        if (!res.ok) return setErrors({pass: res.msg});
-
-        login(res.user as User);
+        try {
+            await login(usernameOrEmail, password);
+            navigate("/");
+        } catch (err) {
+            setErrors({ pass: "Credenciales inválidas" });
+        }
     };
 
     return (
@@ -46,86 +45,86 @@ export default function Login() {
             animate-fadeIn
             ">
 
-            {/* Glow exterior envolvente */}
-            <div className="absolute inset-0 -z-10 blur-3xl opacity-30 bg-cyan-500/20 rounded-2xl"></div>
+                {/* Glow exterior envolvente */}
+                <div className="absolute inset-0 -z-10 blur-3xl opacity-30 bg-cyan-500/20 rounded-2xl"></div>
 
-            <h2 className="text-center text-4xl font-bold text-cyan-300 tracking-wide drop-shadow-[0_0_8px_rgba(0,200,255,0.55)]">
-                Iniciar sesión
-            </h2>
-            <p className="text-center text-gray-300 mt-2 mb-10">
-                Gestioná tu biblioteca personal digital
-            </p>
+                <h2 className="text-center text-4xl font-bold text-cyan-300 tracking-wide drop-shadow-[0_0_8px_rgba(0,200,255,0.55)]">
+                    Iniciar sesión
+                </h2>
+                <p className="text-center text-gray-300 mt-2 mb-10">
+                    Gestioná tu biblioteca personal digital
+                </p>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-6">
 
-                {/* Usuario */}
-                <div className="flex flex-col gap-1">
-                <label className="text-gray-200 text-sm font-medium">Usuario o email</label>
-                <input
-                    className="
+                    {/* Usuario */}
+                    <div className="flex flex-col gap-1">
+                        <label className="text-gray-200 text-sm font-medium">Usuario o email</label>
+                        <input
+                            className="
                     w-full bg-black/40 border border-white/20 px-4 py-3 rounded-lg
                     focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(0,200,255,0.45)] 
                     outline-none transition-all text-white
                     "
-                    type="text"
-                    value={usernameOrEmail}
-                    onChange={(e)=>setUsernameOrEmail(e.target.value)}
-                    placeholder="Ingrese el email/usuario"
-                />
-                {errors.user && <span className="text-red-400 text-xs">{errors.user}</span>}
-                </div>
+                            type="text"
+                            value={usernameOrEmail}
+                            onChange={(e) => setUsernameOrEmail(e.target.value)}
+                            placeholder="Ingrese el email/usuario"
+                        />
+                        {errors.user && <span className="text-red-400 text-xs">{errors.user}</span>}
+                    </div>
 
-                {/* Contraseña */}
-                <div className="flex flex-col gap-1 relative">
-                <label className="text-gray-200 text-sm font-medium">Contraseña</label>
-                <input
-                    className="
+                    {/* Contraseña */}
+                    <div className="flex flex-col gap-1 relative">
+                        <label className="text-gray-200 text-sm font-medium">Contraseña</label>
+                        <input
+                            className="
                     w-full bg-black/40 border border-white/20 px-4 py-3 rounded-lg
                     focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(0,200,255,0.45)]
                     outline-none transition-all text-white
                     "
-                    type={showPass ? "text" : "password"}
-                    value={password}
-                    onChange={(e)=>setPassword(e.target.value)}
-                    placeholder="Ingrese la Contraseña"
-                />
+                            type={showPass ? "text" : "password"}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Ingrese la Contraseña"
+                        />
 
-                <span
-                    onClick={()=>setShowPass(!showPass)}
-                    className="
+                        <span
+                            onClick={() => setShowPass(!showPass)}
+                            className="
                     absolute right-4 bottom-3.5 cursor-pointer 
                     text-gray-300 hover:text-cyan-300 transition select-none
                     "
-                >
-                    {showPass ? <EyeOff size={20}/> : <Eye size={20}/>}
-                </span>
+                        >
+                            {showPass ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </span>
 
-                {errors.pass && <span className="text-red-400 text-xs">{errors.pass}</span>}
-                </div>
+                        {errors.pass && <span className="text-red-400 text-xs">{errors.pass}</span>}
+                    </div>
 
-                {/* Botón */}
-                <button
-                className="
+                    {/* Botón */}
+                    <button
+                        className="
                     w-full py-3 rounded-lg font-bold text-white text-lg 
                     bg-cyan-400 hover:bg-cyan-300 active:scale-[0.97]
                     transition-all duration-200 shadow-[0_0_20px_rgba(0,200,255,0.45)]
                 "
-                >
-                Ingresar
-                </button>
+                    >
+                        Ingresar
+                    </button>
 
-                <p className="text-center text-gray-300 text-sm mt-2">
-                ¿No tenés cuenta?
-                <Link 
-                    to="/register" 
-                    className="text-cyan-300 hover:text-cyan-200 ml-1 underline underline-offset-2"
-                >
-                    Registrate
-                </Link>
-                </p>
+                    <p className="text-center text-gray-300 text-sm mt-2">
+                        ¿No tenés cuenta?
+                        <Link
+                            to="/register"
+                            className="text-cyan-300 hover:text-cyan-200 ml-1 underline underline-offset-2"
+                        >
+                            Registrate
+                        </Link>
+                    </p>
 
-            </form>
+                </form>
             </div>
         </div>
-        );
+    );
 }

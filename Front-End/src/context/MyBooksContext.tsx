@@ -1,13 +1,17 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
-import type { Book } from "../services/bookService";
+import type { Libro } from "../types/LibroModel";
+import { booksApi } from "../api/books";
+import { AuthContext } from "./AuthContext";
+
+// Alias Book to Libro for compatibility with existing components
+export type Book = Libro;
 
 interface MyBooksContextType {
     myBooks: Book[];
-    addBook: (book: Book) => void;
-    removeBook: (id: number) => void;
+    addBook: (book: Book) => Promise<void>;
+    removeBook: (id: number) => Promise<void>;
     hasBook: (id: number) => boolean;
     incrementReadCount: (id: number) => void;
-    getMostReadBook: () => Book | null;
     getMostReadBook: () => Book | null;
     getBooksSavedLastMonth: () => number;
     getLastReadBook: () => Book | null;
@@ -16,10 +20,8 @@ interface MyBooksContextType {
 const MyBooksContext = createContext<MyBooksContextType | undefined>(undefined);
 
 export const MyBooksProvider = ({ children }: { children: ReactNode }) => {
-    const [myBooks, setMyBooks] = useState<Book[]>(() => {
-        const stored = localStorage.getItem("myBooks");
-        return stored ? JSON.parse(stored) : [];
-    });
+    const { user } = useContext(AuthContext);
+    const [myBooks, setMyBooks] = useState<Book[]>([]);
 
     const [readStats, setReadStats] = useState<Record<number, number>>(() => {
         const stored = localStorage.getItem("myBooksStats");
@@ -31,10 +33,18 @@ export const MyBooksProvider = ({ children }: { children: ReactNode }) => {
         return stored ? parseInt(stored) : null;
     });
 
+    // Pagar libros desde API cuando cambia el usuario
     useEffect(() => {
-        localStorage.setItem("myBooks", JSON.stringify(myBooks));
-    }, [myBooks]);
+        if (user) {
+            booksApi.getMyBooks(user.id)
+                .then(books => setMyBooks(books))
+                .catch(err => console.error("Error fetching my books", err));
+        } else {
+            setMyBooks([]);
+        }
+    }, [user]);
 
+    // Persist stats locally (not supported by backend yet)
     useEffect(() => {
         localStorage.setItem("myBooksStats", JSON.stringify(readStats));
     }, [readStats]);
@@ -45,15 +55,25 @@ export const MyBooksProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [lastReadBookId]);
 
-    const addBook = (book: Book) => {
-        setMyBooks((prev) => {
-            if (prev.some((b) => b.id === book.id)) return prev;
-            return [...prev, { ...book, addedAt: new Date().toISOString() }];
-        });
+    const addBook = async (book: Book) => {
+        if (!user) return;
+        try {
+            await booksApi.addToLibrary(user.id, book.id);
+            // Refresh list or optimistic update
+            setMyBooks(prev => [...prev, { ...book, addedAt: new Date().toISOString() }]);
+        } catch (error) {
+            console.error("Error adding book", error);
+        }
     };
 
-    const removeBook = (id: number) => {
-        setMyBooks((prev) => prev.filter((b) => b.id !== id));
+    const removeBook = async (id: number) => {
+        if (!user) return;
+        try {
+            await booksApi.removeFromLibrary(user.id, id);
+            setMyBooks(prev => prev.filter(b => b.id !== id));
+        } catch (error) {
+            console.error("Error removing book", error);
+        }
     };
 
     const hasBook = (id: number) => myBooks.some((b) => b.id === id);

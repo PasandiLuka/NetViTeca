@@ -9,14 +9,14 @@ interface GenreFilterProps {
 const GenreFilter: React.FC<GenreFilterProps> = ({ genres, selectedGenre, onSelectGenre }) => {
     return (
         <div className="mb-6">
-            <label htmlFor="genre-select" className="text-white mr-3 font-medium">
+            <label htmlFor="genre-select" className="text-[var(--color-text-primary)] mr-3 font-medium">
                 Filtrar por género:
             </label>
             <select
                 id="genre-select"
                 value={selectedGenre}
                 onChange={(e) => onSelectGenre(e.target.value)}
-                className="bg-gray-800 text-white border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors cursor-pointer hover:bg-gray-700"
+                className="bg-[var(--color-surface)] text-[var(--color-text-primary)] border border-[var(--color-border)] rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-colors cursor-pointer hover:bg-[var(--color-surface-hover)]"
             >
                 <option value="Todos">Todos</option>
                 {genres.map((genre) => (

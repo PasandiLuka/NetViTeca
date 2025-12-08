@@ -57,7 +57,10 @@ builder.Services.AddScoped<IBibliotecaService, BibliotecaService>();
 builder.Services.AddScoped<IGeneroService, GeneroService>();
 builder.Services.AddScoped<ILibroService, LibroService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
+
+builder.WebHost.UseUrls("http://*:5017");
 
 var app = builder.Build();
 

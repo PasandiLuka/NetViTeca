@@ -41,15 +41,15 @@ const MisLibros = () => {
   if (myBooks.length === 0) {
     return (
       <div className="flex flex-col justify-center items-center min-h-[60vh] text-center p-8">
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-300 mb-6">
+        <h2 className="text-2xl md:text-3xl font-bold text-[var(--color-text-secondary)] mb-6">
           Hasta el momento no tiene libros, ¿desea adquirir uno?
         </h2>
         <button
           onClick={() => navigate("/catalogo")}
           className="
             px-8 py-3 rounded-xl font-bold text-lg
-            bg-cyan-500 text-white shadow-lg shadow-cyan-500/30
-            hover:bg-cyan-400 hover:scale-105 transition-all
+            bg-[var(--color-primary)] text-white shadow-lg shadow-cyan-500/30
+            hover:bg-[var(--color-primary-hover)] hover:scale-105 transition-all
           "
         >
           Ir al Catálogo
@@ -86,16 +86,16 @@ const MisLibros = () => {
           "
           >
             <div className="
-            bg-black/60 rounded-xl border border-white/10 p-8 w-[90%] max-w-md
+            bg-[var(--color-surface)] rounded-xl border border-[var(--color-border)] p-8 w-[90%] max-w-md
             shadow-[0_0_40px_rgba(255,50,50,0.4)]
             text-center
           ">
-              <h2 className="text-2xl text-white font-bold mb-4">¿Eliminar Libro?</h2>
+              <h2 className="text-2xl text-[var(--color-text-primary)] font-bold mb-4">¿Eliminar Libro?</h2>
 
-              <p className="text-gray-300 mb-2">
-                Vas a eliminar <span className="text-cyan-400 font-semibold">{bookToDelete.title}</span> de tu biblioteca.
+              <p className="text-[var(--color-text-secondary)] mb-2">
+                Vas a eliminar <span className="text-[var(--color-primary)] font-semibold">{bookToDelete.title}</span> de tu biblioteca.
               </p>
-              <p className="text-gray-400 text-sm mb-6">
+              <p className="text-[var(--color-text-muted)] text-sm mb-6">
                 Esta acción no se puede deshacer (a menos que lo agregues de nuevo desde el catálogo).
               </p>
 
@@ -115,8 +115,8 @@ const MisLibros = () => {
 
                 <button
                   className="
-                    w-full py-2 rounded-lg font-semibold text-gray-300
-                    hover:text-white hover:bg-white/10
+                    w-full py-2 rounded-lg font-semibold text-[var(--color-text-secondary)]
+                    hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-hover)]
                     transition-all
                 "
                   onClick={() => setDeleteModalOpen(false)}

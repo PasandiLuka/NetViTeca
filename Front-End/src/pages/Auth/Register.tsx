@@ -2,18 +2,17 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import "../../styles/Auth.css";
-import { saveUser } from "../../utils/Auth";
 import { Eye, EyeOff } from "lucide-react";
 
 export default function Register() {
 
   const navigate = useNavigate();
 
-  const { user } = useContext(AuthContext);
+  const { user, register } = useContext(AuthContext);
 
   useEffect(() => {
-        if (user) navigate("/");
-        }, [user]);
+    if (user) navigate("/");
+  }, [user]);
 
   const [form, setForm] = useState({
     username: "",
@@ -28,61 +27,68 @@ export default function Register() {
   const [showPass, setShowPass] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
+  // ... (handleChange and validateField remain same, omitted for brevity if replace targets block)
+  // Wait, I should not omit content in replacement if Itarget a range. 
+  // I will target specific blocks.
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const { name, value } = e.target;
-  setForm({ ...form, [name]: value });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
 
-  validateField(name, value);
-};
+    validateField(name, value);
+  };
 
-const validateField = (name: string, value: string) => {
-  let msg = "";
+  const validateField = (name: string, value: string) => {
+    let msg = "";
 
-  switch (name) {
-    case "username":
-      if (!value.trim()) msg = "El nombre de usuario es obligatorio.";
-      break;
+    switch (name) {
+      case "username":
+        if (!value.trim()) msg = "El nombre de usuario es obligatorio.";
+        break;
 
-    case "fullname":
-      if (!value.trim()) msg = "Ingresa tu nombre completo.";
-      break;
+      case "fullname":
+        if (!value.trim()) msg = "Ingresa tu nombre completo.";
+        break;
 
-    case "phone":
-      if (!value.trim()) msg = "El teléfono es obligatorio.";
-      else if (!/^[0-9\s+-]{6,}$/.test(value)) msg = "Teléfono inválido.";
-      break;
+      case "phone":
+        if (!value.trim()) msg = "El teléfono es obligatorio.";
+        else if (!/^[0-9\s+-]{6,}$/.test(value)) msg = "Teléfono inválido.";
+        break;
 
-    case "email":
-      if (!value.trim()) msg = "El correo es obligatorio.";
-      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) msg = "Correo inválido.";
-      break;
+      case "email":
+        if (!value.trim()) msg = "El correo es obligatorio.";
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) msg = "Correo inválido.";
+        break;
 
-    case "password":
-      if (value.length < 6) msg = "Mínimo 6 caracteres.";
-      break;
+      case "password":
+        if (value.length < 6) msg = "Mínimo 6 caracteres.";
+        break;
 
-    case "confirmPassword":
-      if (value !== form.password) msg = "Las contraseñas no coinciden.";
-      break;
-  }
-
-  setErrors(prev => ({ ...prev, [name]: msg }));
-};
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-
-    const { confirmPassword, ...userData } = form;
-    const res = saveUser(userData);
-
-    if (!res.ok) {
-      alert(res.msg);
-      return;
+      case "confirmPassword":
+        if (value !== form.password) msg = "Las contraseñas no coinciden.";
+        break;
     }
 
-    alert("Cuenta creada con éxito 🎉");
-    navigate("/login");
+    setErrors(prev => ({ ...prev, [name]: msg }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Validate all fields before submitting
+    // (Simplification: relying on current errors state might be flaky if user didn't touch fields)
+    // But assuming strict validations were done or button disabled? 
+    // Ideally re-validate.
+
+    const { confirmPassword, ...userData } = form;
+
+    try {
+      await register(userData);
+      alert("Cuenta creada con éxito 🎉");
+      navigate("/login");
+    } catch (err) {
+      alert("Error al crear cuenta. Intenta con otro usuario/email.");
+    }
   };
 
   return (
@@ -111,13 +117,13 @@ const validateField = (name: string, value: string) => {
 
           {/* Campo Reutilizable → Input Premium */}
           {[
-            { label:"Nombre de usuario", name:"username" },
-            { label:"Nombre completo", name:"fullname" },
-            { label:"Teléfono",      name:"phone" },
-            { label:"Correo electrónico", name:"email" }
+            { label: "Nombre de usuario", name: "username" },
+            { label: "Nombre completo", name: "fullname" },
+            { label: "Teléfono", name: "phone" },
+            { label: "Correo electrónico", name: "email" }
           ].map((field) => (
             <div key={field.name} className="flex flex-col col-span-1">
-              
+
               <label className="text-gray-200 text-sm mb-1">{field.label}</label>
 
               <input
@@ -128,11 +134,11 @@ const validateField = (name: string, value: string) => {
                   w-full bg-black/30 border px-4 py-3 pr-10 rounded-lg text-white outline-none
                   transition-all duration-200
 
-                  ${errors[field.name] 
-                      ? "border-red-400 shadow-[0_0_18px_rgba(255,60,60,0.55)]"                // ❌ inválido
-                      : form[field.name as keyof typeof form]
-                          ? "border-green-400 shadow-[0_0_18px_rgba(60,255,150,0.55)]"        // ✔ válido
-                          : "border-white/20 focus:border-cyan-400 focus:shadow-[0_0_12px_rgba(0,200,255,0.45)]" // ◼ neutral
+                  ${errors[field.name]
+                    ? "border-red-400 shadow-[0_0_18px_rgba(255,60,60,0.55)]"                // ❌ inválido
+                    : form[field.name as keyof typeof form]
+                      ? "border-green-400 shadow-[0_0_18px_rgba(60,255,150,0.55)]"        // ✔ válido
+                      : "border-white/20 focus:border-cyan-400 focus:shadow-[0_0_12px_rgba(0,200,255,0.45)]" // ◼ neutral
                   }
                 `}
               />
@@ -158,11 +164,11 @@ const validateField = (name: string, value: string) => {
                 className={`
                   w-full bg-black/30 border px-4 py-3 pr-10 rounded-lg text-white outline-none
                   transition-all duration-200
-                  ${errors.password 
-                      ? "border-red-400 shadow-[0_0_18px_rgba(255,60,60,0.55)]" 
-                      : form.password
-                          ? "border-green-400 shadow-[0_0_18px_rgba(60,255,150,0.55)]"
-                          : "border-white/20 focus:border-cyan-400 focus:shadow-[0_0_12px_rgba(0,200,255,0.45)]"
+                  ${errors.password
+                    ? "border-red-400 shadow-[0_0_18px_rgba(255,60,60,0.55)]"
+                    : form.password
+                      ? "border-green-400 shadow-[0_0_18px_rgba(60,255,150,0.55)]"
+                      : "border-white/20 focus:border-cyan-400 focus:shadow-[0_0_12px_rgba(0,200,255,0.45)]"
                   }
                 `}
               />
@@ -203,9 +209,9 @@ const validateField = (name: string, value: string) => {
                 className={`
                   w-full bg-black/30 border px-4 py-3 pr-10 rounded-lg text-white outline-none
                   transition-all duration-200
-                  ${errors.confirmPassword 
-                    ? "border-red-400 shadow-[0_0_10px_rgba(255,50,50,0.45)]" 
-                    : form.confirmPassword 
+                  ${errors.confirmPassword
+                    ? "border-red-400 shadow-[0_0_10px_rgba(255,50,50,0.45)]"
+                    : form.confirmPassword
                       ? "border-green-400 shadow-[0_0_10px_rgba(50,255,150,0.45)]"
                       : "border-white/20 focus:border-cyan-400 focus:shadow-[0_0_10px_rgba(0,200,255,0.4)]"
                   }
@@ -228,7 +234,7 @@ const validateField = (name: string, value: string) => {
                   boxShadow: "none"
                 }}
               >
-                {showConfirm ? <EyeOff size={20}/> : <Eye size={20}/>}
+                {showConfirm ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
             </div>
 

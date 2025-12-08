@@ -1,6 +1,8 @@
 using NetViTeca.Core.Models;
 using NetViTeca.Core.Dtos;
 using NetViTeca.Core.Persistencia;
+using NetViTeca.Core.IServices;
+using System.Linq;
 
 namespace NetViTeca.Services;
 
@@ -10,10 +12,14 @@ namespace NetViTeca.Services;
 public class LibroService : ILibroService
 {
     private readonly IRepoLibro _repoLibro;
+    private readonly IRepoUsuario _repoUsuario;
+    private readonly IEmailService _emailService;
 
-    public LibroService(IRepoLibro repoLibro)
+    public LibroService(IRepoLibro repoLibro, IRepoUsuario repoUsuario, IEmailService emailService)
     {
         _repoLibro = repoLibro;
+        _repoUsuario = repoUsuario;
+        _emailService = emailService;
     }
 
     /// <inheritdoc />
@@ -39,6 +45,26 @@ public class LibroService : ILibroService
         };
 
         await _repoLibro.AltaLibro(nuevoLibro);
+
+        // --- NOTIFICACIÓN POR EMAIL ---
+        try 
+        {
+            var usuariosSuscritos = await _repoUsuario.ObtenerUsuariosSuscritos();
+            var emails = usuariosSuscritos.Select(u => u.Email).ToList();
+            
+            if (emails.Any())
+            {
+                var subject = $"Nuevo libro disponible: {nuevoLibro.Title}";
+                var body = $"Hola,\n\nSe ha añadido un nuevo libro a la biblioteca: '{nuevoLibro.Title}' de {nuevoLibro.Author}.\n\n¡Disfrútalo!";
+                await _emailService.SendEmailToAllAsync(emails, subject, body);
+            }
+        }
+        catch (Exception ex)
+        {
+            // No bloqueamos la creación del libro si falla el email, solo loggeamos
+            Console.WriteLine($"Error enviando notificaciones: {ex.Message}");
+        }
+        // ------------------------------
 
         return Result<Libro>.Created(nuevoLibro, "Libro creado exitosamente.");
     }

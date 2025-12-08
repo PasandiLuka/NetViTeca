@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { updateUser, deleteUser, type User } from "../../utils/Auth";
+import { authApi } from "../../api/auth";
+import type { User } from "../../types/UserModel";
 import ProfileHeader from "../../components/ProfileHeader/ProfileHeader";
 import ProfileForm from "../../components/ProfileForm/ProfileForm";
 import StatsSection from "../../components/StatsSection/StatsSection";
@@ -9,30 +10,36 @@ import DangerZone from "../../components/DangerZone/DangerZone";
 import { useNavigate } from "react-router-dom";
 
 export default function MiPerfil() {
-    const { user, updateAuthSession, logoutUser } = useContext(AuthContext);
+    const { user, updateUser, logoutUser } = useContext(AuthContext);
     const [isEditing, setIsEditing] = useState(false);
     const navigate = useNavigate();
 
-    if (!user) return null; // Should be handled by ProtectedRoute but extra safety
+    if (!user) return null;
 
-    const handleUpdate = (updatedUser: User) => {
-        const result = updateUser(updatedUser);
-        if (result.ok) {
-            updateAuthSession(updatedUser);
+    const handleUpdate = async (updatedUser: User) => {
+        try {
+            await authApi.updateProfile(user.id, updatedUser); // Using authApi to update
+
+            // Merge updated fields into current user state
+            // The API returns the updated user, but updatedUser from form has the fields we care about.
+            const newUser = { ...user, ...updatedUser };
+            updateUser(newUser);
+
+            alert("Perfil actualizado correctamente.");
             setIsEditing(false);
-            // Optional: Add toast notification here
-        } else {
-            alert("Error al actualizar: " + result.msg);
+        } catch (error) {
+            console.error("Error updating profile:", error);
+            alert("Hubo un error al actualizar el perfil.");
         }
     };
 
     const handleDelete = () => {
-        const result = deleteUser(user.username);
-        if (result.ok) {
-            logoutUser();
-            navigate("/login");
-        } else {
-            alert("Error al eliminar cuenta");
+        // TODO: Implement delete using authApi
+        if (confirm("¿Estás seguro? Esta acción no se puede deshacer.")) {
+            console.log("Delete not fully implemented");
+            alert("Funcionalidad en mantenimiento.");
+            // logoutUser();
+            // navigate("/login");
         }
     };
 
@@ -66,24 +73,24 @@ export default function MiPerfil() {
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div className="md:col-span-2">
-                                    <h2 className="text-2xl font-bold text-white mb-4">Resumen de Cuenta</h2>
-                                    <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+                                    <h2 className="text-2xl font-bold text-[var(--color-text-primary)] mb-4">Resumen de Cuenta</h2>
+                                    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl p-6">
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                                             <div>
-                                                <p className="text-gray-500 mb-1">Nombre Completo</p>
-                                                <p className="text-white font-medium text-lg">{user.fullname}</p>
+                                                <p className="text-[var(--color-text-secondary)] mb-1">Nombre Completo</p>
+                                                <p className="text-[var(--color-text-primary)] font-medium text-lg">{user.fullname}</p>
                                             </div>
                                             <div>
-                                                <p className="text-gray-500 mb-1">Usuario</p>
-                                                <p className="text-white font-medium text-lg">@{user.username}</p>
+                                                <p className="text-[var(--color-text-secondary)] mb-1">Usuario</p>
+                                                <p className="text-[var(--color-text-primary)] font-medium text-lg">@{user.username}</p>
                                             </div>
                                             <div>
-                                                <p className="text-gray-500 mb-1">Email</p>
-                                                <p className="text-white font-medium text-lg">{user.email}</p>
+                                                <p className="text-[var(--color-text-secondary)] mb-1">Email</p>
+                                                <p className="text-[var(--color-text-primary)] font-medium text-lg">{user.email}</p>
                                             </div>
                                             <div>
-                                                <p className="text-gray-500 mb-1">Teléfono</p>
-                                                <p className="text-white font-medium text-lg">{user.phone}</p>
+                                                <p className="text-[var(--color-text-secondary)] mb-1">Teléfono</p>
+                                                <p className="text-[var(--color-text-primary)] font-medium text-lg">{user.phone}</p>
                                             </div>
                                         </div>
                                     </div>

@@ -69,8 +69,24 @@ public class UsuarioService : IUsuarioService
         // 3. Mapeo a DTO de Respuesta antes de retornar (SOLO campos esenciales)
         var responseDto = MapearAUsuarioResponseDTO(usuario);
 
-        // 4. Éxito de la autenticación
         return Result<UsuarioResponseDTO>.Ok(responseDto);
+    }
+
+    /// <inheritdoc/>
+    public async Task<Result<UsuarioResponseDTO>> ActualizarUsuario(int id, UsuarioActualizacionRequestDTO request)
+    {
+        var usuario = await _repoUsuario.ObtenerUsuarioPorId(id);
+        if (usuario == null)
+        {
+            return Result<UsuarioResponseDTO>.NotFound($"Usuario con ID {id} no encontrado.");
+        }
+
+        usuario.FullName = request.FullName;
+        usuario.Phone = request.Phone;
+
+        await _repoUsuario.ActualizarUsuario(usuario);
+
+        return Result<UsuarioResponseDTO>.Ok(MapearAUsuarioResponseDTO(usuario));
     }
 
     /// <summary>
@@ -82,10 +98,11 @@ public class UsuarioService : IUsuarioService
     {
         return new UsuarioResponseDTO
         {
-            // Mapeo simplificado
             Id = usuario.Id,
             Username = usuario.Username,
-            Email = usuario.Email
+            Email = usuario.Email,
+            FullName = usuario.FullName,
+            Phone = usuario.Phone
         };
     }
 }

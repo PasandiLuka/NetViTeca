@@ -59,6 +59,22 @@ public static class UsuarioEndpoints
             Description = "Verifica las credenciales del usuario y devuelve el NombreUsuario y Correo si el login es exitoso." 
         });
 
+        /// <summary>
+        /// Actualiza la información del perfil del usuario.
+        /// URL: PUT /api/usuarios/{id}
+        /// </summary>
+        group.MapPut("/{id}", async (int id, [FromBody] UsuarioActualizacionRequestDTO request, IUsuarioService service) =>
+        {
+            var result = await service.ActualizarUsuario(id, request);
+            return result.ToMinimalResult();
+        })
+        .WithName("ActualizarUsuario")
+        .WithOpenApi(op => new(op)
+        {
+            Summary = "Actualizar Perfil de Usuario",
+            Description = "Actualiza el nombre completo y teléfono de un usuario existente."
+        });
+
         return app;
     }
 }

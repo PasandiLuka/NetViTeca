@@ -1,20 +1,41 @@
-import { useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Monitor, Moon, Sun, Bell, Globe, Type } from "lucide-react";
+import { useTheme } from "../../context/ThemeContext";
+import { AuthContext } from "../../context/AuthContext";
+import { authApi } from "../../api/auth";
 
 export default function PreferencesSection() {
-    const [theme, setTheme] = useState<"light" | "dark" | "auto">("dark");
-    const [notifications, setNotifications] = useState(true);
+    const { theme, setTheme } = useTheme();
+    const { user, updateUser } = useContext(AuthContext);
+    const [notifications, setNotifications] = useState(user?.receiveNotifications ?? true);
 
-    // Mock function to simulate theme switching
-    const handleThemeChange = (newTheme: "light" | "dark" | "auto") => {
-        setTheme(newTheme);
-        // In a real app, this would toggle a class on user_preferences/html/body
-        console.log(`Theme changed to: ${newTheme}`);
+    useEffect(() => {
+        if (user) {
+            setNotifications(user.receiveNotifications ?? true);
+        }
+    }, [user]);
+
+    const toggleNotifications = async () => {
+        if (!user) return;
+
+        const newValue = !notifications;
+        setNotifications(newValue);
+
+        try {
+            // Optimistic UI update
+            updateUser({ ...user, receiveNotifications: newValue });
+            await authApi.updateProfile(user.id, { ...user, receiveNotifications: newValue });
+        } catch (error) {
+            console.error("Error updating notification preference:", error);
+            // Revert on error
+            setNotifications(!newValue);
+            updateUser({ ...user, receiveNotifications: !newValue });
+        }
     };
 
     return (
         <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-2xl shadow-[0_0_25px_rgba(0,200,255,0.05)] mt-8">
-            <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+            <h2 className="text-xl font-bold text-[var(--color-text-primary)] mb-6 flex items-center gap-2">
                 <Monitor size={22} className="text-purple-400" />
                 Preferencias
             </h2>
@@ -23,27 +44,27 @@ export default function PreferencesSection() {
                 {/* Theme Toggles */}
                 <div className="flex items-center justify-between">
                     <div>
-                        <h3 className="text-white font-medium">Tema de la interfaz</h3>
-                        <p className="text-sm text-gray-400">Selecciona tu apariencia favorita</p>
+                        <h3 className="text-[var(--color-text-primary)] font-medium">Tema de la interfaz</h3>
+                        <p className="text-sm text-[var(--color-text-secondary)]">Selecciona tu apariencia favorita</p>
                     </div>
                     <div className="flex bg-black/40 p-1 rounded-lg border border-white/5">
                         <button
-                            onClick={() => handleThemeChange("light")}
+                            onClick={() => setTheme("light")}
                             className={`p-2 rounded-md transition-all ${theme === "light" ? "bg-white text-black shadow-md" : "text-gray-500 hover:text-gray-300"}`}
                             title="Claro"
                         >
                             <Sun size={18} />
                         </button>
                         <button
-                            onClick={() => handleThemeChange("auto")}
-                            className={`p-2 rounded-md transition-all ${theme === "auto" ? "bg-white text-black shadow-md" : "text-gray-500 hover:text-gray-300"}`}
+                            onClick={() => setTheme("system")}
+                            className={`p-2 rounded-md transition-all ${theme === "system" ? "bg-white text-black shadow-md" : "text-gray-500 hover:text-gray-300"}`}
                             title="Automático"
                         >
                             <Monitor size={18} />
                         </button>
                         <button
-                            onClick={() => handleThemeChange("dark")}
-                            className={`p-2 rounded-md transition-all ${theme === "dark" ? "bg-gray-700 text-white shadow-md" : "text-gray-500 hover:text-gray-300"}`}
+                            onClick={() => setTheme("dark")}
+                            className={`p-2 rounded-md transition-all ${theme === "dark" ? "bg-[var(--color-text-primary)] text-[var(--color-surface)] shadow-md" : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"}`}
                             title="Oscuro"
                         >
                             <Moon size={18} />
@@ -61,17 +82,17 @@ export default function PreferencesSection() {
                                 <Bell size={18} />
                             </div>
                             <div>
-                                <p className="text-sm font-medium text-gray-200">Notificaciones</p>
-                                <p className="text-xs text-gray-500">Novedades y alertas</p>
+                                <p className="text-sm font-medium text-[var(--color-text-primary)]">Notificaciones</p>
+                                <p className="text-xs text-[var(--color-text-muted)]">Novedades y alertas</p>
                             </div>
                         </div>
                         {/* Switch Toggle Profesional */}
                         <button
-                            onClick={() => setNotifications(!notifications)}
+                            onClick={toggleNotifications}
                             className={`
                                 relative w-11 h-6 rounded-full flex items-center transition-all duration-300
-                                ${notifications 
-                                    ? "bg-green-500/80 shadow-[0_0_12px_rgba(0,255,120,0.55)]" 
+                                ${notifications
+                                    ? "bg-green-500/80 shadow-[0_0_12px_rgba(0,255,120,0.55)]"
                                     : "bg-red-500/70 shadow-[0_0_12px_rgba(255,80,80,0.55)]"
                                 }
                                 hover:brightness-110
@@ -80,8 +101,8 @@ export default function PreferencesSection() {
                             <span
                                 className={`
                                     w-3.5 h-3.5 rounded-full bg-white shadow-sm transition-all duration-300
-                                    ${notifications 
-                                        ? "translate-x-3 opacity-100" 
+                                    ${notifications
+                                        ? "translate-x-3 opacity-100"
                                         : "translate-x-1 opacity-90"
                                     }
                                 `}
@@ -95,8 +116,8 @@ export default function PreferencesSection() {
                                 <Globe size={18} />
                             </div>
                             <div>
-                                <p className="text-sm font-medium text-gray-200">Idioma</p>
-                                <p className="text-xs text-gray-500">Español (ES)</p>
+                                <p className="text-sm font-medium text-[var(--color-text-primary)]">Idioma</p>
+                                <p className="text-xs text-[var(--color-text-muted)]">Español (ES)</p>
                             </div>
                         </div>
                     </div>
@@ -107,8 +128,8 @@ export default function PreferencesSection() {
                                 <Type size={18} />
                             </div>
                             <div>
-                                <p className="text-sm font-medium text-gray-200">Tipografía</p>
-                                <p className="text-xs text-gray-500">Satoshi (Default)</p>
+                                <p className="text-sm font-medium text-[var(--color-text-primary)]">Tipografía</p>
+                                <p className="text-xs text-[var(--color-text-muted)]">Satoshi (Default)</p>
                             </div>
                         </div>
                     </div>

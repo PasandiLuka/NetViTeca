@@ -16,7 +16,7 @@ export default function BookCard({ id, image, title, author, description, onAdd,
         onClick={() => setOpenModal(true)}
         className="
           group cursor-pointer overflow-hidden
-          bg-black/40 border border-white/10 rounded-xl 
+          bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl 
           shadow-[0_0_15px_rgba(0,200,255,0.15)]
           hover:shadow-[0_0_35px_rgba(0,200,255,0.35)]
           backdrop-blur-lg transition-all duration-300
@@ -55,8 +55,8 @@ export default function BookCard({ id, image, title, author, description, onAdd,
           <div className="absolute bottom-0 w-full h-16 bg-gradient-to-t from-black/80 to-transparent"></div>
         </div>
 
-        <div className="p-4 flex flex-col gap-2 text-white">
-          <h3 className="font-bold text-lg text-white group-hover:text-cyan-300 transition">
+        <div className="p-4 flex flex-col gap-2 text-[var(--color-text-primary)]">
+          <h3 className="font-bold text-lg text-[var(--color-text-primary)] group-hover:text-cyan-300 transition">
             {title.length > 42 ? title.slice(0, 42) + "..." : title}
           </h3>
 
@@ -64,7 +64,7 @@ export default function BookCard({ id, image, title, author, description, onAdd,
             {author}
           </p>
 
-          <p className="text-sm text-gray-300 line-clamp-2">
+          <p className="text-sm text-[var(--color-text-secondary)] line-clamp-2">
             {description}
           </p>
 
@@ -98,15 +98,15 @@ export default function BookCard({ id, image, title, author, description, onAdd,
           "
         >
           <div className="
-            bg-black/60 rounded-xl border border-white/10 p-8 w-[90%] max-w-xl 
+            bg-[var(--color-surface)] rounded-xl border border-[var(--color-border)] p-8 w-[90%] max-w-xl 
             shadow-[0_0_40px_rgba(0,200,255,0.4)]
           ">
-            <h2 className="text-3xl text-white hover:text-cyan-300 transition-colors duration-300 font-bold">{title}</h2>
-            <p className="text-gray-300 text-sm mt-1 mb-4">por {author}</p>
+            <h2 className="text-3xl text-[var(--color-text-primary)] hover:text-cyan-300 transition-colors duration-300 font-bold">{title}</h2>
+            <p className="text-[var(--color-text-secondary)] text-sm mt-1 mb-4">por {author}</p>
 
             <img src={image} className="w-40 h-56 object-cover rounded-lg shadow mx-auto mb-4" />
 
-            <p className="text-gray-200 text-center">{description}</p>
+            <p className="text-[var(--color-text-secondary)] text-center">{description}</p>
 
 
 

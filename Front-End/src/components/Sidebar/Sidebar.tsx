@@ -20,7 +20,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
       <aside
         className={cn(
           "fixed top-0 left-0 h-full w-[280px] z-50",
-          "bg-black/60 backdrop-blur-lg border-r border-white/10",
+          "bg-[var(--color-surface)]/80 backdrop-blur-lg border-r border-[var(--color-border)]",
           "shadow-[0_0_25px_rgba(0,170,255,0.35)]",
           "transform transition-all duration-300 ease-[cubic-bezier(0.25,0.8,0.25,1)]",
           "flex flex-col",                       // << NUEVO para permitir auto push
@@ -30,7 +30,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
         <div className="flex justify-end p-4">
           <button
             onClick={onClose}
-            className="text-white hover:text-cyan-400 transition"
+            className="text-[var(--color-text-primary)] hover:text-cyan-400 transition"
           >
             ✕
           </button>
@@ -41,16 +41,16 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
           {[
             { href: "/", label: "Inicio" },
             { href: "/catalogo", label: "Catálogo" },
-            { href: "/genero", label: "Género" },
+
             // "Libro" eliminado ya que ahora está en el dropdown del usuario
           ].map((item) => (
             <a
               key={item.href}
               href={item.href}
               className={cn(
-                "text-gray-200 text-lg py-2 px-3 rounded-md",
+                "text-[var(--color-text-secondary)] text-lg py-2 px-3 rounded-md",
                 "transition-all duration-300",
-                "hover:text-white hover:bg-white/10",
+                "hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-hover)]",
                 "hover:translate-x-2"
               )}
               onClick={onClose}
@@ -59,11 +59,11 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
             </a>
           ))}
 
-          <div className="h-px bg-white/10 my-2"></div>
+          <div className="h-px bg-[var(--color-border)] my-2"></div>
 
           <a
             href="/crearlibro"
-            className="text-cyan-400 font-semibold text-lg py-2 px-3 rounded-md transition-all duration-300 hover:text-cyan-300 hover:bg-cyan-500/10 hover:translate-x-2 flex items-center gap-2"
+            className="text-[var(--color-primary)] font-semibold text-lg py-2 px-3 rounded-md transition-all duration-300 hover:text-[var(--color-primary-hover)] hover:bg-[var(--color-primary)]/10 hover:translate-x-2 flex items-center gap-2"
             onClick={onClose}
           >
             + Crear Libro
@@ -71,7 +71,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
 
           <a
             href="/creargenero"
-            className="text-cyan-400 font-semibold text-lg py-2 px-3 rounded-md transition-all duration-300 hover:text-cyan-300 hover:bg-cyan-500/10 hover:translate-x-2 flex items-center gap-2"
+            className="text-[var(--color-primary)] font-semibold text-lg py-2 px-3 rounded-md transition-all duration-300 hover:text-[var(--color-primary-hover)] hover:bg-[var(--color-primary)]/10 hover:translate-x-2 flex items-center gap-2"
             onClick={onClose}
           >
             + Crear Género

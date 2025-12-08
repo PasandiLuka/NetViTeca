@@ -1,4 +1,4 @@
-import type { User } from "../utils/Auth";
+import type { User } from "../types/UserModel";
 
 export interface ProfileHeaderProps {
     user: User;

@@ -22,6 +22,19 @@ public interface IRepoUsuario
     Task<Usuario?> ObtenerUsuarioPorCorreo(string correo);
 
     /// <summary>
+    /// Busca un usuario por su ID.
+    /// </summary>
+    /// <param name="id">El ID del usuario.</param>
+    /// <returns>El Usuario encontrado o <c>null</c>.</returns>
+    Task<Usuario?> ObtenerUsuarioPorId(int id);
+
+    /// <summary>
+    /// Actualiza la información de un usuario existente.
+    /// </summary>
+    /// <param name="usuario">El usuario con los datos actualizados.</param>
+    Task ActualizarUsuario(Usuario usuario);
+
+    /// <summary>
     /// Verifica si ya existe un usuario con el correo electrónico proporcionado.
     /// </summary>
     /// <param name="correo">El correo electrónico a verificar.</param>
@@ -34,4 +47,10 @@ public interface IRepoUsuario
     /// <param name="usuario">El nombre de usuario a verificar.</param>
     /// <returns><c>true</c> si el nombre de usuario ya existe, de lo contrario <c>false</c>.</returns>
     Task<bool> UsuarioExiste(string usuario);
+
+    /// <summary>
+    /// Obtiene la lista de usuarios que tienen activadas las notificaciones.
+    /// </summary>
+    /// <returns>Lista de usuarios suscritos.</returns>
+    Task<List<Usuario>> ObtenerUsuariosSuscritos();
 }

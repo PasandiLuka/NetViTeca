@@ -29,11 +29,11 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           {/* LADO IZQUIERDO: TEXTO + CTAS */}
           <div className="space-y-6">
-            <p className="text-sm font-medium text-cyan-400 uppercase tracking-[0.25em] stagger stagger-1">
+            <p className="text-sm font-medium text-[var(--color-primary)] uppercase tracking-[0.25em] stagger stagger-1">
               Bienvenido a
             </p>
 
-            <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+            <h1 className="text-4xl md:text-5xl font-bold text-[var(--color-text-primary)] leading-tight">
               <span className="stagger stagger-2 inline-block">
                 NetViTeca:
               </span>
@@ -42,12 +42,12 @@ export default function Home() {
                 tu biblioteca digital
               </span>
               <br />
-              <span className="stagger stagger-4 inline-block text-cyan-300">
+              <span className="stagger stagger-4 inline-block text-[var(--color-primary)]">
                 personalizada y siempre a disposición.
               </span>
             </h1>
 
-            <p className="text-base md:text-lg text-gray-300 max-w-xl stagger stagger-5">
+            <p className="text-base md:text-lg text-[var(--color-text-secondary)] max-w-xl stagger stagger-5">
               Gestiona, descubre y organiza nuevos titulos y colecciones
               de forma simple, moderna y sin preocuparte de su envejecimiento.
             </p>
@@ -59,9 +59,9 @@ export default function Home() {
                 <button
                   className="
                     px-6 py-3 rounded-xl
-                    bg-cyan-500/90 text-white font-semibold
+                    bg-[var(--color-primary)] text-white font-semibold
                     shadow-[0_0_20px_rgba(56,189,248,0.45)]
-                    hover:bg-cyan-400 hover:shadow-[0_0_26px_rgba(56,189,248,0.6)]
+                    hover:bg-[var(--color-primary-hover)] hover:shadow-[0_0_26px_rgba(56,189,248,0.6)]
                     transition-all duration-200
                   "
                 >
@@ -75,9 +75,9 @@ export default function Home() {
                 <button
                   className="
                     px-6 py-3 rounded-xl
-                    bg-cyan-500/90 text-white font-semibold
+                    bg-[var(--color-primary)] text-white font-semibold
                     shadow-[0_0_20px_rgba(56,189,248,0.45)]
-                    hover:bg-cyan-400 hover:shadow-[0_0_26px_rgba(56,189,248,0.6)]
+                    hover:bg-[var(--color-primary-hover)] hover:shadow-[0_0_26px_rgba(56,189,248,0.6)]
                     transition-all duration-200
                   "
                 >

@@ -1,7 +1,7 @@
-import type { User } from "../utils/Auth";
+import type { User } from "./UserModel";
 
 export type AuthContextType = {
   user: User | null;
-  login: (u: User) => void;
+  login: (email: string, pass: string) => Promise<void>;
   logoutUser: () => void;
 };

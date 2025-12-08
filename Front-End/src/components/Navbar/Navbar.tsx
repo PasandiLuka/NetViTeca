@@ -14,7 +14,7 @@ export default function Navbar({ open, setOpen }: NavbarProps) {
     <nav
       className="
         fixed top-0 left-0 right-0 h-16 
-        bg-black/70 backdrop-blur-xl border-b border-white/10 
+        bg-[var(--color-surface)]/70 backdrop-blur-xl border-b border-[var(--color-border)] 
         shadow-[0_0_15px_rgba(0,170,255,0.35)]
         flex items-center justify-between px-6 z-50
       "
@@ -24,7 +24,7 @@ export default function Navbar({ open, setOpen }: NavbarProps) {
         {/* HAMBURGER */}
         <button
           onClick={() => setOpen(!open)}
-          className="text-white hover:text-cyan-400 transition"
+          className="text-[var(--color-text-primary)] hover:text-cyan-400 transition"
         >
           {open ? <X size={20} /> : <Menu size={20} />}
         </button>
@@ -33,7 +33,7 @@ export default function Navbar({ open, setOpen }: NavbarProps) {
         <Link
           to="/"
           className="
-              flex items-center gap-3 no-underline text-white
+              flex items-center gap-3 no-underline text-[var(--color-text-primary)]
               hover:text-cyan-300 hover:drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]
               transition-all duration-200
             "
@@ -48,7 +48,7 @@ export default function Navbar({ open, setOpen }: NavbarProps) {
         <div className="relative">
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="flex items-center gap-2 text-white hover:text-cyan-300 transition focus:outline-none"
+            className="flex items-center gap-2 text-[var(--color-text-primary)] hover:text-cyan-300 transition focus:outline-none"
           >
 
             <span className="font-medium text-lg">{user.fullname || user.username}</span>
@@ -57,10 +57,10 @@ export default function Navbar({ open, setOpen }: NavbarProps) {
 
           {/* DROPDOWN MENU */}
           {dropdownOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-gray-900 border border-white/10 rounded-md shadow-lg py-2 flex flex-col z-50">
+            <div className="absolute right-0 mt-2 w-48 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md shadow-lg py-2 flex flex-col z-50">
               <Link
                 to="/miperfil"
-                className="text-left px-4 py-2 text-gray-300 hover:bg-white/10 hover:text-white transition w-full"
+                className="text-left px-4 py-2 text-[var(--color-text-secondary)] hover:bg-[var(--color-border)] hover:text-[var(--color-text-primary)] transition w-full"
                 onClick={() => {
                   setDropdownOpen(false);
                   // Acción "Mi perfil" por definir
@@ -70,15 +70,15 @@ export default function Navbar({ open, setOpen }: NavbarProps) {
               </Link>
               <Link
                 to="/mislibros"
-                className="px-4 py-2 text-gray-300 hover:bg-white/10 hover:text-white transition block"
+                className="px-4 py-2 text-[var(--color-text-secondary)] hover:bg-[var(--color-border)] hover:text-[var(--color-text-primary)] transition block"
                 onClick={() => setDropdownOpen(false)}
               >
                 Mis Libros
               </Link>
-              <div className="h-px bg-white/10 my-1 mx-2" />
+              <div className="h-px bg-[var(--color-border)] my-1 mx-2" />
               <Link
                 to="/"
-                className="text-left px-4 py-2 text-red-400 hover:bg-white/10 hover:!text-red-500 transition w-full"
+                className="text-left px-4 py-2 text-red-400 hover:bg-[var(--color-border)] hover:!text-red-500 transition w-full"
                 onClick={() => {
                   setDropdownOpen(false);
                   logoutUser();

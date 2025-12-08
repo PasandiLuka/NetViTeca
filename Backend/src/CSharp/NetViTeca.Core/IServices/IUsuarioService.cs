@@ -23,4 +23,12 @@ public interface IUsuarioService
     /// <param name="contrasena">La contraseña para la autenticación.</param>
     /// <returns>Un objeto <c>Result</c> que contiene el Usuario autenticado en formato DTO en caso de éxito o un mensaje de error.</returns>
     Task<Result<UsuarioResponseDTO>> AutenticarUsuario(string email, string password); // <- Tipo de retorno cambiado
+
+    /// <summary>
+    /// Actualiza la información del perfil de un usuario.
+    /// </summary>
+    /// <param name="id">El ID del usuario a actualizar.</param>
+    /// <param name="request">DTO con los datos a actualizar.</param>
+    /// <returns>Result con el usuario actualizado.</returns>
+    Task<Result<UsuarioResponseDTO>> ActualizarUsuario(int id, UsuarioActualizacionRequestDTO request);
 }

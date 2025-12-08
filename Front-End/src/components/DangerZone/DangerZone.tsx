@@ -29,12 +29,12 @@ export default function DangerZone({ onLogout, onDeleteAccount }: DangerZoneProp
             <div className="bg-red-500/5 border border-red-500/20 rounded-2xl p-6 space-y-6 backdrop-blur-sm">
                 <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                     <div>
-                        <h3 className="text-white font-medium">Cerrar Sesión</h3>
-                        <p className="text-sm text-gray-400">Finaliza tu sesión actual en este dispositivo.</p>
+                        <h3 className="text-[var(--color-text-primary)] font-medium">Cerrar Sesión</h3>
+                        <p className="text-sm text-[var(--color-text-secondary)]">Finaliza tu sesión actual en este dispositivo.</p>
                     </div>
                     <button
                         onClick={onLogout}
-                        className="px-6 py-2.5 rounded-lg border border-white/10 hover:bg-white/5 text-gray-300 hover:text-white transition-colors flex items-center gap-2 w-full md:w-auto justify-center"
+                        className="px-6 py-2.5 rounded-lg border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors flex items-center gap-2 w-full md:w-auto justify-center"
                     >
                         <LogOut size={18} />
                         Cerrar Sesión
@@ -46,7 +46,7 @@ export default function DangerZone({ onLogout, onDeleteAccount }: DangerZoneProp
                 <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                     <div>
                         <h3 className="text-red-400 font-medium">Eliminar Cuenta</h3>
-                        <p className="text-sm text-gray-400">Esta acción no se puede deshacer. Perderás todos tus libros guardados.</p>
+                        <p className="text-sm text-[var(--color-text-secondary)]">Esta acción no se puede deshacer. Perderás todos tus libros guardados.</p>
                     </div>
                     <button
                         onClick={handleDeleteClick}
@@ -61,7 +61,7 @@ export default function DangerZone({ onLogout, onDeleteAccount }: DangerZoneProp
             {/* Modal de Confirmación */}
             {showDeleteModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
-                    <div className="bg-[#0a0a0a] border border-red-500/30 rounded-2xl max-w-md w-full p-8 shadow-[0_0_50px_rgba(239,68,68,0.2)] relative">
+                    <div className="bg-[var(--color-background)] border border-red-500/30 rounded-2xl max-w-md w-full p-8 shadow-[0_0_50px_rgba(239,68,68,0.2)] relative">
                         <button
                             onClick={() => setShowDeleteModal(false)}
                             className="absolute top-4 right-4 text-gray-500 hover:text-white"
@@ -76,14 +76,14 @@ export default function DangerZone({ onLogout, onDeleteAccount }: DangerZoneProp
 
                             {step === 1 ? (
                                 <>
-                                    <h3 className="text-2xl font-bold text-white">¿Estás seguro?</h3>
-                                    <p className="text-gray-400">
+                                    <h3 className="text-2xl font-bold text-[var(--color-text-primary)]">¿Estás seguro?</h3>
+                                    <p className="text-[var(--color-text-secondary)]">
                                         Estás a punto de eliminar tu cuenta permanentemente. Esta acción borrará todos tus datos y NO se puede revertir.
                                     </p>
                                     <div className="flex gap-4 w-full mt-4">
                                         <button
                                             onClick={() => setShowDeleteModal(false)}
-                                            className="flex-1 py-3 rounded-lg border border-white/10 text-white hover:bg-white/5 font-medium"
+                                            className="flex-1 py-3 rounded-lg border border-[var(--color-border)] text-[var(--color-text-primary)] hover:bg-[var(--color-surface-hover)] font-medium"
                                         >
                                             Cancelar
                                         </button>
@@ -97,15 +97,15 @@ export default function DangerZone({ onLogout, onDeleteAccount }: DangerZoneProp
                                 </>
                             ) : (
                                 <>
-                                    <h3 className="text-2xl font-bold text-white">Confirmación Final</h3>
-                                    <p className="text-gray-400 text-sm">
+                                    <h3 className="text-2xl font-bold text-[var(--color-text-primary)]">Confirmación Final</h3>
+                                    <p className="text-[var(--color-text-secondary)] text-sm">
                                         Para confirmar, escribe <span className="text-red-500 font-bold select-none">ELIMINAR</span> a continuación.
                                     </p>
                                     <input
                                         type="text"
                                         value={confirmText}
                                         onChange={(e) => setConfirmText(e.target.value)}
-                                        className="w-full bg-black/50 border border-red-500/30 rounded-lg px-4 py-3 text-center text-white tracking-widest placeholder-gray-600 focus:outline-none focus:border-red-500 transition-colors"
+                                        className="w-full bg-[var(--color-surface)] border border-red-500/30 rounded-lg px-4 py-3 text-center text-[var(--color-text-primary)] tracking-widest placeholder-[var(--color-text-muted)] focus:outline-none focus:border-red-500 transition-colors"
                                         placeholder="ELIMINAR"
                                     />
                                     <button
@@ -113,7 +113,7 @@ export default function DangerZone({ onLogout, onDeleteAccount }: DangerZoneProp
                                         disabled={confirmText !== "ELIMINAR"}
                                         className={`w-full py-3 rounded-lg font-bold transition-all mt-4 ${confirmText === "ELIMINAR"
                                             ? "bg-red-600 hover:bg-red-700 text-white shadow-[0_0_20px_rgba(220,38,38,0.4)]"
-                                            : "bg-white/5 text-gray-600 cursor-not-allowed"
+                                            : "bg-[var(--color-surface-hover)] text-[var(--color-text-muted)] cursor-not-allowed"
                                             }`}
                                     >
                                         Confirmar Eliminación

@@ -1,32 +1,49 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import BookCard from "../../components/BookCard/BookCard";
 import GenreFilter from "../../components/GenreFilter/GenreFilter";
-import { getBooks, type Book } from "../../services/bookService";
+import { booksApi } from "../../api/books";
+import { genresApi } from "../../api/genres";
+import type { Libro as Book } from "../../types/LibroModel";
 import { useMyBooks } from "../../context/MyBooksContext";
+import { AuthContext } from "../../context/AuthContext";
 
 const Catalogo = () => {
   const [books, setBooks] = useState<Book[]>([]);
+  const [genres, setGenres] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedGenre, setSelectedGenre] = useState("Todos");
   const { addBook } = useMyBooks();
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchBooks = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await getBooks();
-        setBooks(data);
+        // Si hay usuario, pedir disponibles para él (excluyendo los que ya tiene)
+        // Si no, pedir todos (getAvailable acepta userId opcional)
+        // También pedimos los géneros para el filtro
+        const [booksData, genresData] = await Promise.all([
+          booksApi.getAvailable(user?.id),
+          genresApi.getAll()
+        ]);
+
+        setBooks(booksData);
+        // Asumimos que genresData viene con la propiedad 'genero' o 'name' mapeada correctamente
+        // En genres.ts vimos que mapea a 'genero'
+        setGenres(genresData.map((g: any) => g.genero || g.name));
       } catch (err) {
-        console.error("Error al cargar los libros", err);
+        console.error("Error al cargar los datos", err);
         setError("Hubo un problema al cargar el catálogo. Por favor intenta más tarde.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchBooks();
-  }, []);
+    fetchData();
+  }, [user]);
 
   if (loading) {
     return (
@@ -52,36 +69,58 @@ const Catalogo = () => {
     );
   }
 
+  // Filtrar libros
+  const filteredBooks = books.filter(book => selectedGenre === "Todos" || book.genre === selectedGenre);
+
   return (
     <div className="p-8">
       <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-white mb-4 md:mb-0">Catálogo de Libros</h1>
+        <h1 className="text-3xl font-bold text-[var(--color-text-primary)] mb-4 md:mb-0">Catálogo de Libros</h1>
         <GenreFilter
-          genres={Array.from(new Set(books.map((book) => book.genre))).filter(Boolean).sort()}
+          genres={genres}
           selectedGenre={selectedGenre}
           onSelectGenre={setSelectedGenre}
         />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-        {books
-          .filter(book => selectedGenre === "Todos" || book.genre === selectedGenre)
-          .map((book) => (
-            <BookCard
-              key={book.id}
-              id={book.id}
-              image={book.image}
-              title={book.title}
-              author={book.author}
-              description={book.description}
-              onClick={() => console.log(`Abrir libro: ${book.title}`)}
-              onAdd={() => {
-                addBook(book);
-                alert(`Libro "${book.title}" agregado a tus libros`);
-              }}
-            />
-          ))}
-      </div>
+      {/* Caso 1: No hay libros en absoluto */}
+      {books.length === 0 ? (
+        <div className="flex flex-col justify-center items-center h-64 text-center">
+          <p className="text-[var(--color-text-secondary)] text-xl mb-6">No hay libros disponibles por el momento, ¿desea agregar un libro?</p>
+          <button
+            onClick={() => navigate('/crearlibro')}
+            className="px-6 py-3 bg-cyan-500 text-white font-semibold rounded-lg shadow-lg hover:bg-cyan-400 transition-all transform hover:scale-105"
+          >
+            Crear un libro
+          </button>
+        </div>
+      ) : (
+        /* Caso 2: Hay libros, pero el filtro no arroja resultados */
+        filteredBooks.length === 0 ? (
+          <div className="flex justify-center items-center h-64">
+            <p className="text-[var(--color-text-secondary)] text-xl">No hay libros con ese género.</p>
+          </div>
+        ) : (
+          /* Caso 3: Mostrar libros filtrados */
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            {filteredBooks.map((book) => (
+              <BookCard
+                key={book.id}
+                id={book.id}
+                image={book.image}
+                title={book.title}
+                author={book.author}
+                description={book.description}
+                onClick={() => console.log(`Abrir libro: ${book.title}`)}
+                onAdd={() => {
+                  addBook(book);
+                  alert(`Libro "${book.title}" agregado a tus libros`);
+                }}
+              />
+            ))}
+          </div>
+        )
+      )}
     </div>
   );
 };

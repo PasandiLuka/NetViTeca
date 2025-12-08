@@ -27,5 +27,7 @@ public class Usuario
     [StringLength(45)]
     public string Phone { get; set; } = string.Empty;
 
+    public bool ReceiveNotifications { get; set; } = true;
+
     public Usuario() { }
 }

@@ -8,16 +8,15 @@ export default function MainLayout() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="relative min-h-screen bg-black text-white overflow-x-hidden">
+    <div className="relative min-h-screen bg-[var(--color-background)] text-[var(--color-text-primary)] overflow-x-hidden">
 
       <Navbar open={open} setOpen={setOpen} />
       <Sidebar open={open} onClose={() => setOpen(false)} />
 
       {/* Contenido que se empuja */}
       <div
-        className={`transition-transform duration-300 pt-16 ${
-          open ? "translate-x-[280px]" : ""
-        }`}
+        className={`transition-transform duration-300 pt-16 ${open ? "translate-x-[280px]" : ""
+          }`}
       >
         <main className="p-6">
           <Outlet />

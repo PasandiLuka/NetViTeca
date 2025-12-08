@@ -3,7 +3,7 @@ import MainLayout from "../layout/mainLayout";
 import Home from "../pages/Home/Home";
 import Catalogo from "../pages/Catologo/Catologo";
 import MisLibros from "../pages/MisLibros/MisLibros";
-import Genero from "../pages/Genero/Genero";
+
 import Libro from "../pages/Libro/Libro";
 import CreateBook from "../pages/Libro/CreateBook";
 import CreateGenre from "../pages/Genero/CreateGenre";
@@ -25,7 +25,7 @@ function AppRouter() {
         <Route path="/" element={<Home />} />
         <Route path="/catalogo" element={<Catalogo />} />
         <Route path="/mislibros" element={<MisLibros />} />
-        <Route path="/genero" element={<Genero />} />
+
         <Route path="/libro" element={<Libro />} />
         <Route path="/crearlibro" element={<CreateBook />} />
         <Route path="/creargenero" element={<CreateGenre />} />
