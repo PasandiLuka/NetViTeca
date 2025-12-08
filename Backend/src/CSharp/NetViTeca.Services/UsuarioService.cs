@@ -31,10 +31,13 @@ public class UsuarioService : IUsuarioService
             numeroTelefono = request.telefono
         };
 
-        // 2. Lógica de negocio: Verificar si el correo ya existe
-        var correoExiste = await _repoUsuario.CorreoExiste(nuevoUsuario.correo);
+        // 2. Lógica de negocio: Verificar duplicados
+        if (await _repoUsuario.UsuarioExiste(nuevoUsuario.nombreUsuario))
+        {
+            return Result<UsuarioResponseDTO>.BadRequest($"El nombre de usuario '{nuevoUsuario.nombreUsuario}' ya está en uso.");
+        }
 
-        if (correoExiste)
+        if (await _repoUsuario.CorreoExiste(nuevoUsuario.correo))
         {
             return Result<UsuarioResponseDTO>.BadRequest("El correo electrónico ya está registrado.");
         }
@@ -79,6 +82,7 @@ public class UsuarioService : IUsuarioService
         return new UsuarioResponseDTO
         {
             // Mapeo simplificado
+            idUsuario = usuario.idUsuario,
             nombreUsuario = usuario.nombreUsuario,
             correo = usuario.correo
         };

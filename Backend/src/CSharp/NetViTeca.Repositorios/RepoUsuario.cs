@@ -43,4 +43,12 @@ public class RepoUsuario : RepoBaseAdo, IRepoUsuario
         return await _contexto.Usuarios
             .AnyAsync(u => u.correo == correo);
     }
+
+    /// <inheritdoc/>
+    public async Task<bool> UsuarioExiste(string usuario)
+    {
+        // Verifica si existe algún registro donde nombreUsuario sea igual al parámetro
+        return await _contexto.Usuarios
+            .AnyAsync(u => u.nombreUsuario == usuario);
+    }
 }

@@ -27,4 +27,11 @@ public interface IRepoUsuario
     /// <param name="correo">El correo electrónico a verificar.</param>
     /// <returns><c>true</c> si el correo ya existe, de lo contrario <c>false</c>.</returns>
     Task<bool> CorreoExiste(string correo);
+
+    /// <summary>
+    /// Verifica si ya existe un usuario con el nombre de usuario proporcionado.
+    /// </summary>
+    /// <param name="usuario">El nombre de usuario a verificar.</param>
+    /// <returns><c>true</c> si el nombre de usuario ya existe, de lo contrario <c>false</c>.</returns>
+    Task<bool> UsuarioExiste(string usuario);
 }
