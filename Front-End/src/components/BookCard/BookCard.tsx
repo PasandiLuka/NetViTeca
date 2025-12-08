@@ -1,13 +1,36 @@
 import type { BookCardProps } from "@/types/BookCardProps";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useMyBooks } from "../../context/MyBooksContext";
-
-
 
 export default function BookCard({ id, image, title, author, description, onAdd, onDelete, url }: BookCardProps) {
   const [openModal, setOpenModal] = useState(false);
   const { incrementReadCount } = useMyBooks();
+
+  // Estado para la imagen con fallback
+  const [imgSrc, setImgSrc] = useState(image);
+
+  useEffect(() => {
+    setImgSrc(image);
+  }, [image]);
+
+  const handleImageError = () => {
+    // Fallback a una imagen por defecto o placeholder de color
+    // Usamos una imagen de placeholder de servicio público si falla
+    setImgSrc("https://via.placeholder.com/300x400?text=No+Image");
+  };
+
+  // Validación de URL
+  const isValidUrl = (link?: string) => {
+    if (!link) return false;
+    // Chequear si empieza con http/https
+    if (link.startsWith("http://") || link.startsWith("https://")) return true;
+    // Si es una ruta relativa válida (no ../..)
+    if (link.startsWith("/") && !link.includes("..")) return true;
+    return false;
+  };
+
+  const bookUrl = isValidUrl(url) ? url : "";
 
   return (
     <>
@@ -18,6 +41,7 @@ export default function BookCard({ id, image, title, author, description, onAdd,
           group cursor-pointer overflow-hidden
           bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl 
           shadow-[0_0_15px_rgba(0,200,255,0.15)]
+          hover:shadow-[0_0_15px_rgba(0,200,255,0.15)]
           hover:shadow-[0_0_35px_rgba(0,200,255,0.35)]
           backdrop-blur-lg transition-all duration-300
           hover:-translate-y-1 hover:border-cyan-400/50
@@ -27,8 +51,9 @@ export default function BookCard({ id, image, title, author, description, onAdd,
         <div className="relative w-full aspect-[3/4] overflow-hidden rounded-t-xl">
 
           <img
-            src={image}
+            src={imgSrc}
             alt={title}
+            onError={handleImageError}
             className="w-full h-full object-cover 
             group-hover:scale-105 transition-all duration-500"
           />
@@ -104,7 +129,11 @@ export default function BookCard({ id, image, title, author, description, onAdd,
             <h2 className="text-3xl text-[var(--color-text-primary)] hover:text-cyan-300 transition-colors duration-300 font-bold">{title}</h2>
             <p className="text-[var(--color-text-secondary)] text-sm mt-1 mb-4">por {author}</p>
 
-            <img src={image} className="w-40 h-56 object-cover rounded-lg shadow mx-auto mb-4" />
+            <img
+              src={imgSrc}
+              onError={handleImageError}
+              className="w-40 h-56 object-cover rounded-lg shadow mx-auto mb-4"
+            />
 
             <p className="text-[var(--color-text-secondary)] text-center">{description}</p>
 
@@ -126,9 +155,9 @@ export default function BookCard({ id, image, title, author, description, onAdd,
             )}
 
             {/* Link Externo */}
-            {url && (
+            {bookUrl && (
               <Link
-                to={url}
+                to={bookUrl}
                 target="_blank"
                 onClick={() => incrementReadCount(id)}
                 className="
