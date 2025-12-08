@@ -8,7 +8,7 @@ interface GenreFilterProps {
 
 const GenreFilter: React.FC<GenreFilterProps> = ({ genres, selectedGenre, onSelectGenre }) => {
     return (
-        <div className="mb-6">
+        <div className="flex items-center">
             <label htmlFor="genre-select" className="text-[var(--color-text-primary)] mr-3 font-medium">
                 Filtrar por género:
             </label>

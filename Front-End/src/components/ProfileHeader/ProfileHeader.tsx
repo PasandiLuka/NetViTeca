@@ -13,7 +13,7 @@ export default function ProfileHeader({ user, onEdit, isEditing }: ProfileHeader
     };
 
     // Mock fecha de registro (ya que no la guardamos en Auth.ts)
-    const memberSince = "Diciembre 2024";
+    const memberSince = "Diciembre 2025";
 
     return (
         <div className="flex flex-col md:flex-row items-center gap-6 p-6 bg-[var(--color-surface)] backdrop-blur-xl border border-[var(--color-border)] rounded-2xl shadow-[0_0_25px_rgba(0,200,255,0.1)] mb-8 transition-all hover:shadow-[0_0_35px_rgba(0,200,255,0.2)]">

@@ -12,6 +12,7 @@ export default function CreateBook() {
         title: "",
         genre: "", // Stores genre NAME for display/select usage if needed, or better, store ID? Form usually binds to select value.
         genreId: "", // Helper for select
+        editorial: "",
         author: "",
         description: "",
         image: "",
@@ -57,6 +58,7 @@ export default function CreateBook() {
             await booksApi.create({
                 title: form.title,
                 author: form.author,
+                editorial: form.editorial,
                 description: form.description,
                 image: form.image,
                 url: form.url,
@@ -103,6 +105,19 @@ export default function CreateBook() {
                                 value={form.author}
                                 onChange={handleChange}
                                 placeholder="Ej. Paulo Coelho"
+                                className="bg-[var(--color-background)] border border-[var(--color-border)] rounded-md p-3 text-[var(--color-text-primary)] focus:border-[var(--color-primary)] focus:outline-none transition-colors"
+                                required
+                            />
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                            <label className="text-[var(--color-text-secondary)] text-sm">Editorial</label>
+                            <input
+                                name="editorial"
+                                type="text"
+                                value={form.editorial}
+                                onChange={handleChange}
+                                placeholder="Ej. Planeta"
                                 className="bg-[var(--color-background)] border border-[var(--color-border)] rounded-md p-3 text-[var(--color-text-primary)] focus:border-[var(--color-primary)] focus:outline-none transition-colors"
                                 required
                             />

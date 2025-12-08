@@ -35,7 +35,7 @@ public class LibroService : ILibroService
         {
             GenreId = request.GenreId,
             Title = request.Title,
-            Publisher = request.Publisher,
+            Editorial = request.Editorial,
             Author = request.Author,
             CreatedAt = request.CreatedAt,
             PageCount = request.PageCount,

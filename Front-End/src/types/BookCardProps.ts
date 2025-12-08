@@ -1,12 +1,12 @@
 export interface BookCardProps {
-    id: number
-    image: string
-    title: string
-    author: string
-    description: string
-
-    onClick?: () => void
-    onAdd?: () => void
-    onDelete?: () => void
-    url?: string
+    id: number;
+    image: string;
+    title: string;
+    author: string;
+    editorial?: string;
+    description: string;
+    onAdd?: () => void;
+    onDelete?: () => void;
+    onClick?: () => void;
+    url?: string;
 }

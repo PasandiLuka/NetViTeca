@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useMyBooks } from "../../context/MyBooksContext";
 
-export default function BookCard({ id, image, title, author, description, onAdd, onDelete, url }: BookCardProps) {
+export default function BookCard({ id, image, title, author, editorial, description, onAdd, onDelete, url }: BookCardProps) {
   const [openModal, setOpenModal] = useState(false);
   const { incrementReadCount } = useMyBooks();
 
@@ -85,9 +85,16 @@ export default function BookCard({ id, image, title, author, description, onAdd,
             {title.length > 42 ? title.slice(0, 42) + "..." : title}
           </h3>
 
-          <p className="text-sm text-cyan-300 opacity-90">
-            {author}
-          </p>
+          <div className="flex flex-col">
+            <p className="text-sm text-cyan-300 opacity-90">
+              {author}
+            </p>
+            {editorial && (
+              <p className="text-xs text-[var(--color-text-secondary)] italic opacity-75">
+                {editorial}
+              </p>
+            )}
+          </div>
 
           <p className="text-sm text-[var(--color-text-secondary)] line-clamp-2">
             {description}
@@ -127,23 +134,24 @@ export default function BookCard({ id, image, title, author, description, onAdd,
             shadow-[0_0_40px_rgba(0,200,255,0.4)]
           ">
             <h2 className="text-3xl text-[var(--color-text-primary)] hover:text-cyan-300 transition-colors duration-300 font-bold">{title}</h2>
-            <p className="text-[var(--color-text-secondary)] text-sm mt-1 mb-4">por {author}</p>
+            <div className="flex gap-2 items-baseline mt-1 mb-4">
+              <p className="text-[var(--color-text-secondary)] text-sm">por {author}</p>
+              {editorial && <span className="text-[var(--color-text-secondary)] text-xs opacity-60">• {editorial}</span>}
+            </div>
 
             <img
               src={imgSrc}
               onError={handleImageError}
               className="w-40 h-56 object-cover rounded-lg shadow mx-auto mb-4"
             />
-
             <p className="text-[var(--color-text-secondary)] text-center">{description}</p>
-
-
 
             {onAdd && (
               <button
                 className="
                   w-full mt-6 py-2 rounded-lg bg-cyan-500 text-white font-semibold 
                   hover:bg-cyan-400 active:scale-[0.97]
+                  transition shadow-[0_0_15px_rgba(0,200,255,0.4)]
                 "
                 onClick={() => {
                   console.log("📚 Agregado a biblioteca ->", title);
@@ -194,8 +202,9 @@ export default function BookCard({ id, image, title, author, description, onAdd,
               Cerrar
             </button>
           </div>
-        </div>
-      )}
+        </div >
+      )
+      }
     </>
   );
 }

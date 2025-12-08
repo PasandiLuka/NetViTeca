@@ -17,7 +17,7 @@ INSERT INTO Genero (Id, Name) VALUES
 -- BOOKS
 -- Mapped from books.json and previous SQL data
 -- Columns: Id, GenreId, Title, Publisher, Author, CreatedAt, PageCount, Description, Image, Url
-INSERT INTO Libro (Id, GenreId, Title, Publisher, Author, CreatedAt, PageCount, Description, Image, Url) VALUES
+INSERT INTO Libro (Id, GenreId, Title, Editorial, Author, CreatedAt, PageCount, Description, Image, Url) VALUES
 (1, 2, 'Don Quijote de la Mancha', 'Francisco de Robles', 'Miguel de Cervantes', '1605-01-16', 863,
 'La historia narra las aventuras del hidalgo Don Quijote, quien enloquece tras leer libros de caballerías y decide convertirse en caballero andante.',
 'https://upload.wikimedia.org/wikipedia/commons/6/6b/Quijote_1855.jpg',

@@ -14,6 +14,7 @@ const Catalogo = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedGenre, setSelectedGenre] = useState("Todos");
+  const [searchTerm, setSearchTerm] = useState("");
   const { addBook } = useMyBooks();
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -70,17 +71,37 @@ const Catalogo = () => {
   }
 
   // Filtrar libros
-  const filteredBooks = books.filter(book => selectedGenre === "Todos" || book.genre === selectedGenre);
+  const filteredBooks = books.filter(book => {
+    const matchGenre = selectedGenre === "Todos" || book.genre === selectedGenre;
+    const matchSearch = book.title.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchGenre && matchSearch;
+  });
 
   return (
     <div className="p-8">
-      <div className="flex flex-col md:flex-row justify-between items-center mb-8">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
         <h1 className="text-3xl font-bold text-[var(--color-text-primary)] mb-4 md:mb-0">Catálogo de Libros</h1>
-        <GenreFilter
-          genres={genres}
-          selectedGenre={selectedGenre}
-          onSelectGenre={setSelectedGenre}
-        />
+
+        {/* Barra de búsqueda y filtros */}
+        <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto items-center">
+          <input
+            type="text"
+            placeholder="Buscar por título..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="
+                    px-4 py-2 rounded-lg 
+                    bg-[var(--color-surface)] border border-[var(--color-border)] 
+                    text-[var(--color-text-primary)] focus:border-cyan-500 focus:outline-none 
+                    placeholder-gray-500 transition-all w-full md:w-64
+                "
+          />
+          <GenreFilter
+            genres={genres}
+            selectedGenre={selectedGenre}
+            onSelectGenre={setSelectedGenre}
+          />
+        </div>
       </div>
 
       {/* Caso 1: No hay libros en absoluto */}
@@ -98,7 +119,7 @@ const Catalogo = () => {
         /* Caso 2: Hay libros, pero el filtro no arroja resultados */
         filteredBooks.length === 0 ? (
           <div className="flex justify-center items-center h-64">
-            <p className="text-[var(--color-text-secondary)] text-xl">No hay libros con ese género.</p>
+            <p className="text-[var(--color-text-secondary)] text-xl">No hay libros que coincidan con tu búsqueda.</p>
           </div>
         ) : (
           /* Caso 3: Mostrar libros filtrados */
@@ -110,6 +131,7 @@ const Catalogo = () => {
                 image={book.image}
                 title={book.title}
                 author={book.author}
+                editorial={book.editorial}
                 description={book.description}
                 onClick={() => console.log(`Abrir libro: ${book.title}`)}
                 onAdd={() => {

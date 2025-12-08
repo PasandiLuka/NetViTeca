@@ -6,5 +6,6 @@ export interface Libro {
     image: string;
     url?: string;
     genre: string;
+    editorial?: string;
     addedAt?: string;
 }

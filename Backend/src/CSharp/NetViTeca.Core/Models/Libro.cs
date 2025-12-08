@@ -15,8 +15,8 @@ public class Libro
     [Required(ErrorMessage = "The title is required.")]
     public string Title { get; set; }
 
-    [Required(ErrorMessage = "The publisher is required.")]
-    public string Publisher { get; set; } // Mapping 'editorial' to 'Publisher'
+    [Required(ErrorMessage = "The editorial is required.")]
+    public string Editorial { get; set; }
 
     [Required(ErrorMessage = "The author is required.")]
     public string Author { get; set; }

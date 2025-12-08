@@ -75,29 +75,31 @@ export default function Login() {
                     </div>
 
                     {/* Contraseña */}
-                    <div className="flex flex-col gap-1 relative">
+                    <div className="flex flex-col gap-1">
                         <label className="text-gray-200 text-sm font-medium">Contraseña</label>
-                        <input
-                            className="
+                        <div className="relative">
+                            <input
+                                className="
                     w-full bg-black/40 border border-white/20 px-4 py-3 rounded-lg
                     focus:border-cyan-400 focus:shadow-[0_0_15px_rgba(0,200,255,0.45)]
                     outline-none transition-all text-white
                     "
-                            type={showPass ? "text" : "password"}
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Ingrese la Contraseña"
-                        />
+                                type={showPass ? "text" : "password"}
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Ingrese la Contraseña"
+                            />
 
-                        <span
-                            onClick={() => setShowPass(!showPass)}
-                            className="
-                    absolute right-4 bottom-3.5 cursor-pointer 
+                            <span
+                                onClick={() => setShowPass(!showPass)}
+                                className="
+                    absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer 
                     text-gray-300 hover:text-cyan-300 transition select-none
                     "
-                        >
-                            {showPass ? <EyeOff size={20} /> : <Eye size={20} />}
-                        </span>
+                            >
+                                {showPass ? <EyeOff size={20} /> : <Eye size={20} />}
+                            </span>
+                        </div>
 
                         {errors.pass && <span className="text-red-400 text-xs">{errors.pass}</span>}
                     </div>

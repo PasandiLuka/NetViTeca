@@ -27,7 +27,7 @@ public class LibroConfig : IEntityTypeConfiguration<Libro>
                          .IsUnique()
                          .HasDatabaseName("IX_Libro_Titulo");
 
-                 builder.Property(l => l.Publisher)
+                 builder.Property(l => l.Editorial)
                         .HasColumnType("varchar(45)")
                         .HasMaxLength(45)
                         .IsRequired();

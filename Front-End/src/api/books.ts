@@ -9,6 +9,7 @@ interface LibroAPI {
     description: string;
     image: string;
     url?: string;
+    editorial?: string;
     genre: {
         id: number;
         name: string;
@@ -24,6 +25,7 @@ const mapBook = (apiBook: LibroAPI): Libro => {
         description: apiBook.description,
         image: apiBook.image,
         url: apiBook.url,
+        editorial: apiBook.editorial,
         // Flatten genre object to string for frontend compatibility
         genre: apiBook.genre?.name || 'Desconocido'
     };
@@ -50,7 +52,7 @@ export const booksApi = {
         await client.post('/api/libros', {
             GenreId: bookData.genreId, // El backend espera GenreId
             Title: bookData.title,
-            Publisher: bookData.publisher || 'Sin Editorial', // Frontend form might not have publisher
+            Editorial: bookData.editorial || 'Sin Editorial',
             Author: bookData.author,
             PageCount: bookData.pageCount || 100, // Dummy if missing
             Description: bookData.description,
