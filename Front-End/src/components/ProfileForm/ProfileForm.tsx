@@ -1,12 +1,7 @@
 import { useState, useEffect } from "react";
 import type { User } from "../../utils/Auth";
+import type { ProfileFormProps } from "../../types/ProfileFormProps";
 import { Save, X, Phone, Mail, User as UserIcon, AlertCircle } from "lucide-react";
-
-interface ProfileFormProps {
-    user: User;
-    onCancel: () => void;
-    onSave: (updatedUser: User) => void;
-}
 
 export default function ProfileForm({ user, onCancel, onSave }: ProfileFormProps) {
     const [formData, setFormData] = useState<User>(user);

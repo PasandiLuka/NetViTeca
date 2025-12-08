@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { LogOut, Trash2, AlertTriangle, X } from "lucide-react";
-
-interface DangerZoneProps {
-    onLogout: () => void;
-    onDeleteAccount: () => void;
-}
+import type { DangerZoneProps } from "../../types/DangerZoneProps";
 
 export default function DangerZone({ onLogout, onDeleteAccount }: DangerZoneProps) {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -116,8 +112,8 @@ export default function DangerZone({ onLogout, onDeleteAccount }: DangerZoneProp
                                         onClick={handleFinalDelete}
                                         disabled={confirmText !== "ELIMINAR"}
                                         className={`w-full py-3 rounded-lg font-bold transition-all mt-4 ${confirmText === "ELIMINAR"
-                                                ? "bg-red-600 hover:bg-red-700 text-white shadow-[0_0_20px_rgba(220,38,38,0.4)]"
-                                                : "bg-white/5 text-gray-600 cursor-not-allowed"
+                                            ? "bg-red-600 hover:bg-red-700 text-white shadow-[0_0_20px_rgba(220,38,38,0.4)]"
+                                            : "bg-white/5 text-gray-600 cursor-not-allowed"
                                             }`}
                                     >
                                         Confirmar Eliminación

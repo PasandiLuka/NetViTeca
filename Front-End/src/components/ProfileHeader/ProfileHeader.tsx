@@ -1,11 +1,5 @@
-import type { User } from "../../utils/Auth";
+import type { ProfileHeaderProps } from "../../types/ProfileHeaderProps";
 import { User as UserIcon, Mail, Calendar } from "lucide-react";
-
-interface ProfileHeaderProps {
-    user: User;
-    onEdit: () => void;
-    isEditing: boolean;
-}
 
 export default function ProfileHeader({ user, onEdit, isEditing }: ProfileHeaderProps) {
     // Generar iniciales
@@ -58,7 +52,7 @@ export default function ProfileHeader({ user, onEdit, isEditing }: ProfileHeader
                 disabled={isEditing}
                 className={`px-6 py-2.5 rounded-full font-medium transition-all duration-300 flex items-center gap-2 ${isEditing
                     ? "bg-white/5 text-gray-500 cursor-not-allowed"
-                    : "bg-white text-black hover:bg-cyan-50 hover:shadow-[0_0_15px_rgba(255,255,255,0.4)] hover:-translate-y-0.5"
+                    : "bg-white text-white hover:bg-cyan-50 hover:shadow-[0_0_15px_rgba(255,255,255,0.4)] hover:-translate-y-0.5"
                     }`}
             >
                 <UserIcon size={18} />
