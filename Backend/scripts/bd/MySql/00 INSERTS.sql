@@ -1,7 +1,3 @@
--- USERS
-INSERT INTO Usuario (Id, FullName, Username, Email, Password, Phone) VALUES 
-(1, 'Lucca Pazanddi', 'LUKITA7956', 'lukita@gmail.com', Sha2('luka1234', 256), '1123456789'),
-(2, 'Sebaz Serpa', 'SEBITA7956', 'sebita@gmail.com', Sha2('seba1234', 256), '1231234324');
 
 -- GENRES
 INSERT INTO Genero (Id, Name) VALUES 
@@ -20,53 +16,45 @@ INSERT INTO Genero (Id, Name) VALUES
 INSERT INTO Libro (Id, GenreId, Title, Editorial, Author, CreatedAt, PageCount, Description, Image, Url) VALUES
 (1, 2, 'Don Quijote de la Mancha', 'Francisco de Robles', 'Miguel de Cervantes', '1605-01-16', 863,
 'La historia narra las aventuras del hidalgo Don Quijote, quien enloquece tras leer libros de caballerías y decide convertirse en caballero andante.',
-'https://upload.wikimedia.org/wikipedia/commons/6/6b/Quijote_1855.jpg',
+'https://images.cdn1.buscalibre.com/fit-in/360x360/a6/18/a618be10eae5c2a608ec6e22e6917e29.jpg',
 'https://cvc.cervantes.es/literatura/lee/coleccion/pdf/quijote.pdf'),
 
 (2, 8, '1984', 'Secker & Warburg', 'George Orwell', '1949-06-08', 328,
 'Una novela distópica que describe un régimen totalitario centrado en la vigilancia y el control social.',
-'https://upload.wikimedia.org/wikipedia/en/c/c3/1984first.jpg',
-'https://www.ciudadseva.com/texto/1984/'),
+'https://images.cdn2.buscalibre.com/fit-in/360x360/3a/2c/3a2c227d11a1026b4aa3d45d33bad4f6.jpg',
+'https://www.philosophia.cl/biblioteca/orwell/1984.pdf'),
 
 (3, 2, 'Hamlet', 'Nicholas Ling', 'William Shakespeare', '1603-07-26', 160,
 'Tragedia sobre el príncipe Hamlet, quien busca vengar la muerte de su padre enfrentando dilemas de moral, locura y traición.',
-'https://upload.wikimedia.org/wikipedia/commons/2/20/Hamlet_Q1_title_page.jpg',
-'https://www.gutenberg.org/files/1524/1524-pdf.pdf'),
+'https://estacionlibro.com.ar/files/tmp/uncompressed/ofo7svijlay55cb3n1qz.jpg',
+'https://www.suneo.mx/literatura/subidas/William%20Shakespeare%20Hamlet.pdf'),
 
 (4, 5, 'Crimen y castigo', 'The Russian Messenger', 'Fiódor Dostoievski', '1866-01-01', 671,
 'Un drama psicológico sobre Raskólnikov, un estudiante que comete un crimen y lucha con la culpa y su necesidad de redención.',
-'https://upload.wikimedia.org/wikipedia/commons/4/47/Crimeandpunishmentcover.png',
-'https://www.gutenberg.org/cache/epub/2554/pg2554-pdf.pdf'),
+'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8s4H8_NH27XyD4Awip32AZZo8YQ97aNyY-Q&s',
+'https://roscuba.ru/images/pdf/crimen_y_castigo_fiodor_dostoievski_es.pdf'),
 
 (5, 2, 'La Odisea', 'Antigua Grecia', 'Homero', '0700-01-01', 500,
 'Poema épico que narra el regreso de Odiseo tras la Guerra de Troya enfrentando criaturas, dioses y desafíos.',
-'https://upload.wikimedia.org/wikipedia/commons/5/5a/Francesco_Hayez_1813_Odisseo_nella_grotta_di_Polimemo.jpg',
-'https://www.gutenberg.org/cache/epub/1727/pg1727-pdf.pdf'),
+'https://www.gutenberg.org/cache/epub/58221/images/cover.jpg',
+'https://www.mendoza.edu.ar/wp-content/uploads/2020/04/La-Odisea-de-Homero.pdf'),
 
 (6, 7, 'Orgullo y prejuicio', 'T. Egerton', 'Jane Austen', '1813-01-28', 279,
 'Historia romántica y satírica sobre Elizabeth Bennet y el señor Darcy donde se exploran prejuicios y diferencias sociales.',
-'https://upload.wikimedia.org/wikipedia/commons/1/15/Title_page_of_Pride_and_Prejudice%2C_the_first_edition.jpg',
-'https://www.gutenberg.org/files/1342/1342-pdf.pdf'),
+'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKF3cJiYh7KqmeEA5SMFlk4-8Qgz0ApbVbAQ&s',
+'https://web.seducoahuila.gob.mx/biblioweb/upload/orgullo_y_prejuicio.pdf'),
 
 (7, 7, 'Guerra y paz', 'The Russian Messenger', 'León Tolstói', '1869-01-01', 1225,
 'Relato épico que retrata la invasión napoleónica y la vida aristocrática rusa a través de varias familias.',
-'https://upload.wikimedia.org/wikipedia/commons/4/4f/War-and-peace_1873.jpg',
-'https://www.gutenberg.org/cache/epub/2600/pg2600-pdf.pdf'),
+'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqGyR--7yiQk0hNJa7DWC7ubPsEX1ledju5g&s',
+'https://casacanal.es/Materiales/biblioteca/clasicosesp/Le%C3%B3n%20Tolstoi/Guerra%20y%20Paz.pdf'),
 
 (8, 2, 'Macbeth', 'Thomas Creede', 'William Shakespeare', '1606-01-01', 85,
 'Una tragedia sobre la ambición, la culpa y las consecuencias del poder tras el ascenso y caída de Macbeth.',
-'https://upload.wikimedia.org/wikipedia/commons/7/7c/Macbeth_first_folio.jpg',
-'https://www.gutenberg.org/files/1533/1533-pdf.pdf'),
+'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRew7-hy1mLd6jI1LSJGrtN2MH3Q-E0Q7bDZA&s',
+'https://www.suneo.mx/literatura/subidas/Willam%20Shakespeare%20%20Macbeth.pdf'),
 
 (9, 5, 'Los hermanos Karamázov', 'The Russian Messenger', 'Fiódor Dostoievski', '1880-01-01', 824,
 'Reflexión filosófica sobre la moral, la fe y el libre albedrío a través del conflicto entre los hermanos Karamázov.',
-'https://upload.wikimedia.org/wikipedia/commons/d/d2/The_Brothers_Karamazov.jpg',
-'https://www.gutenberg.org/cache/epub/28054/pg28054-pdf.pdf');
-
--- LIBRARY
-INSERT INTO Biblioteca (UserId, BookId) VALUES 
-(1, 1),
-(1, 2),
-(1, 3),
-(1, 4),
-(1, 5);
+'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOK3UtgIk7IhMQJUZvvDMH-ISJ673ryqdzXQ&s',
+'https://www.argentina.gob.ar/sites/default/files/los_hermanos_karamazov_dostoyevski.pdf');
