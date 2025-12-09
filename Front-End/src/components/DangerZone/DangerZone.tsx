@@ -34,7 +34,7 @@ export default function DangerZone({ onLogout, onDeleteAccount }: DangerZoneProp
                     </div>
                     <button
                         onClick={onLogout}
-                        className="px-6 py-2.5 rounded-lg border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors flex items-center gap-2 w-full md:w-auto justify-center"
+                        className="px-6 py-2.5 rounded-lg border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] !text-red-600 hover:!text-red-800 transition-colors flex items-center gap-2 w-full md:w-auto justify-center"
                     >
                         <LogOut size={18} />
                         Cerrar Sesión
@@ -50,7 +50,7 @@ export default function DangerZone({ onLogout, onDeleteAccount }: DangerZoneProp
                     </div>
                     <button
                         onClick={handleDeleteClick}
-                        className="px-6 py-2.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-400 hover:text-red-300 transition-colors flex items-center gap-2 w-full md:w-auto justify-center"
+                        className="px-6 py-2.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 !text-red-600 hover:!text-red-800 transition-colors flex items-center gap-2 w-full md:w-auto justify-center"
                     >
                         <Trash2 size={18} />
                         Eliminar Cuenta

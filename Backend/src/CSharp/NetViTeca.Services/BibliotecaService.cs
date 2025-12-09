@@ -68,4 +68,19 @@ public class BibliotecaService : IBibliotecaService
 
         return Result<bool>.Ok(true, "Libro retirado exitosamente de la biblioteca.");
     }
+    
+
+    /// <inheritdoc />
+    public async Task<Result<bool>> IncrementarContadorLectura(int bookId, int userId)
+    {
+         if (bookId <= 0 || userId <= 0)
+            return Result<bool>.BadRequest("IDs inválidos.");
+
+        var success = await _repoBiblioteca.IncrementarLectura(bookId, userId);
+
+        if (!success)
+            return Result<bool>.NotFound("El libro no está en tu biblioteca.");
+
+        return Result<bool>.Ok(true, "Contador incrementado.");
+    }
 }

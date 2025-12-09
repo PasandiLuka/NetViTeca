@@ -78,7 +78,7 @@ export default function Navbar({ open, setOpen }: NavbarProps) {
               <div className="h-px bg-[var(--color-border)] my-1 mx-2" />
               <Link
                 to="/"
-                className="text-left px-4 py-2 text-red-400 hover:bg-[var(--color-border)] hover:!text-red-500 transition w-full"
+                className="text-left px-4 py-2 !text-red-600 hover:bg-[var(--color-border)] hover:!text-red-800 transition w-full"
                 onClick={() => {
                   setDropdownOpen(false);
                   logoutUser();

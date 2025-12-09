@@ -38,6 +38,19 @@ public static class BibliotecaEndpoints
         .WithName("RetirarLibroUsuario")
         .WithOpenApi(op => new(op) { Summary = "Retirar Libro", Description = "Elimina un libro específico de la colección personal del usuario (DELETE)." });
 
+        /// <summary>
+        /// Incrementa el contador de lecturas de un libro.
+        /// URL: POST /api/bibliotecas/{userId}/{bookId}/read
+        /// </summary>
+        group.MapPost("/{userId}/{bookId}/read", async (int userId, int bookId, IBibliotecaService service) =>
+        {
+            var result = await service.IncrementarContadorLectura(bookId, userId);
+            return result.ToMinimalResult();
+        })
+        .WithName("IncrementarLectura")
+        .WithOpenApi(op => new(op) { Summary = "Incrementar Lectura", Description = "Incrementa el contador de veces que se ha leído un libro." });
+
         return app;
+
     }
 }

@@ -26,11 +26,26 @@ public class RepoLibro : RepoBaseAdo, IRepoLibro
     public async Task<List<Libro>> LibrosEnBibliotecaUsuario(int userId)
     {
         // Fix: Query the 'Libros' table directly
-        return await _context.Libros
-            .Include(l => l.Genre) // 1. Apply Include directly on the Libro
-            .Where(l => _context.Bibliotecas
-                // 2. Filter: Check if this book ID exists in the Bibliotecas table for this user
-                .Any(b => b.UserId == userId && b.BookId == l.Id)) 
+        // Fix: Query the 'Bibliotecas' table to join and get the ReadCount
+        return await _context.Bibliotecas
+            .Where(b => b.UserId == userId)
+            .Include(b => b.Book)
+            .ThenInclude(l => l.Genre)
+            .Select(b => new Libro
+            {
+                Id = b.Book.Id,
+                GenreId = b.Book.GenreId,
+                Genre = b.Book.Genre,
+                Title = b.Book.Title,
+                Editorial = b.Book.Editorial,
+                Author = b.Book.Author,
+                CreatedAt = b.Book.CreatedAt,
+                PageCount = b.Book.PageCount,
+                Description = b.Book.Description,
+                Image = b.Book.Image,
+                Url = b.Book.Url,
+                PersonalReadCount = b.ReadCount // Populate the unmapped property
+            })
             .OrderBy(l => l.Id)
             .ToListAsync();
     }

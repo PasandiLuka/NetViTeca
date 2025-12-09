@@ -103,11 +103,10 @@ const MisLibros = () => {
                 <button
                   onClick={confirmDelete}
                   className="
-                    w-full py-2 rounded-lg font-semibold text-white
-                    bg-red-600 
-                    hover:bg-red-500 hover:text-white
+                    w-full py-2 rounded-lg font-semibold
+                    !text-red-600 border border-red-500/20
+                    hover:bg-red-500/10 hover:!text-red-800
                     active:scale-[0.97] transition-all
-                    shadow-lg shadow-red-500/20
                 "
                 >
                   Sí, eliminar

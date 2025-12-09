@@ -33,4 +33,7 @@ public class Libro
     public string Image { get; set; } = string.Empty;
 
     public string Url { get; set; } = string.Empty;
+
+    [System.ComponentModel.DataAnnotations.Schema.NotMapped]
+    public int PersonalReadCount { get; set; } = 0;
 }

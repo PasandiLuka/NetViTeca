@@ -14,6 +14,7 @@ interface LibroAPI {
         id: number;
         name: string;
     } | null;
+    personalReadCount?: number;
     // Otros campos que vengan del backend
 }
 
@@ -27,7 +28,8 @@ const mapBook = (apiBook: LibroAPI): Libro => {
         url: apiBook.url,
         editorial: apiBook.editorial,
         // Flatten genre object to string for frontend compatibility
-        genre: apiBook.genre?.name || 'Desconocido'
+        genre: apiBook.genre?.name || 'Desconocido',
+        personalReadCount: apiBook.personalReadCount || 0
     };
 };
 
@@ -72,5 +74,10 @@ export const booksApi = {
     // Remover de biblioteca
     removeFromLibrary: async (userId: number, bookId: number): Promise<void> => {
         await client.delete(`/api/bibliotecas/${userId}/${bookId}`);
+    },
+
+    // Incrementar lectura
+    incrementReadCount: async (userId: number, bookId: number): Promise<void> => {
+        await client.post(`/api/bibliotecas/${userId}/${bookId}/read`);
     }
 };

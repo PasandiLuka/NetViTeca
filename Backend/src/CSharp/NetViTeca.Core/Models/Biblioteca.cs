@@ -8,4 +8,6 @@ public class Biblioteca
     public Libro Book { get; set; }
 
     public Usuario User { get; set; }
+
+    public int ReadCount { get; set; } = 0;
 }

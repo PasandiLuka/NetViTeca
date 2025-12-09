@@ -20,4 +20,9 @@ public interface IRepoBiblioteca
     /// <param name="idUsuario">ID del usuario de la biblioteca.</param>
     /// <returns>Tarea asíncrona que retorna true si se encontró y eliminó el registro.</returns>
     Task<bool> RetirarLibroAUsuario(int idLibro, int idUsuario);
+
+    /// <summary>
+    /// Incrementa el contador de lecturas para un libro y usuario específicos.
+    /// </summary>
+    Task<bool> IncrementarLectura(int idLibro, int idUsuario);
 }

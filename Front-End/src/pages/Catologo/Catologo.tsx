@@ -15,7 +15,7 @@ const Catalogo = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedGenre, setSelectedGenre] = useState("Todos");
   const [searchTerm, setSearchTerm] = useState("");
-  const { addBook } = useMyBooks();
+  const { addBook, hasBook } = useMyBooks();
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -134,9 +134,15 @@ const Catalogo = () => {
                 editorial={book.editorial}
                 description={book.description}
                 onClick={() => console.log(`Abrir libro: ${book.title}`)}
-                onAdd={() => {
-                  addBook(book);
+                onAdd={async () => {
+                  if (hasBook(book.id)) {
+                    alert(`El libro "${book.title}" ya ha sido añadido a tu biblioteca anteriormente.`);
+                    return;
+                  }
+                  await addBook(book);
                   alert(`Libro "${book.title}" agregado a tus libros`);
+                  // Refresh: remove from local list
+                  setBooks(prev => prev.filter(b => b.id !== book.id));
                 }}
               />
             ))}

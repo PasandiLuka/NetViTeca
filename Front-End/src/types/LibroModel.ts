@@ -8,4 +8,5 @@ export interface Libro {
     genre: string;
     editorial?: string;
     addedAt?: string;
+    personalReadCount?: number;
 }

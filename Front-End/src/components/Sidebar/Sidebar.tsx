@@ -41,8 +41,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
           {[
             { href: "/", label: "Inicio" },
             { href: "/catalogo", label: "Catálogo" },
-
-            // "Libro" eliminado ya que ahora está en el dropdown del usuario
+            { href: "/mislibros", label: "Mis Libros" },
           ].map((item) => (
             <a
               key={item.href}
@@ -82,7 +81,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
         {user && (
           <button
             onClick={logoutUser}
-            className="mt-auto mb-6 mx-6 py-2 text-red-400 hover:text-red-500 transition"
+            className="mt-auto mb-6 mx-6 py-2 !text-red-600 hover:!text-red-800 transition"
           >
             Cerrar sesión
           </button>

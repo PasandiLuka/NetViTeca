@@ -23,11 +23,6 @@ export const MyBooksProvider = ({ children }: { children: ReactNode }) => {
     const { user } = useContext(AuthContext);
     const [myBooks, setMyBooks] = useState<Book[]>([]);
 
-    const [readStats, setReadStats] = useState<Record<number, number>>(() => {
-        const stored = localStorage.getItem("myBooksStats");
-        return stored ? JSON.parse(stored) : {};
-    });
-
     const [lastReadBookId, setLastReadBookId] = useState<number | null>(() => {
         const stored = localStorage.getItem("lastReadBookId");
         return stored ? parseInt(stored) : null;
@@ -44,11 +39,6 @@ export const MyBooksProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [user]);
 
-    // Persist stats locally (not supported by backend yet)
-    useEffect(() => {
-        localStorage.setItem("myBooksStats", JSON.stringify(readStats));
-    }, [readStats]);
-
     useEffect(() => {
         if (lastReadBookId !== null) {
             localStorage.setItem("lastReadBookId", lastReadBookId.toString());
@@ -60,7 +50,7 @@ export const MyBooksProvider = ({ children }: { children: ReactNode }) => {
         try {
             await booksApi.addToLibrary(user.id, book.id);
             // Refresh list or optimistic update
-            setMyBooks(prev => [...prev, { ...book, addedAt: new Date().toISOString() }]);
+            setMyBooks(prev => [...prev, { ...book, addedAt: new Date().toISOString(), personalReadCount: 0 }]);
         } catch (error) {
             console.error("Error adding book", error);
         }
@@ -78,27 +68,37 @@ export const MyBooksProvider = ({ children }: { children: ReactNode }) => {
 
     const hasBook = (id: number) => myBooks.some((b) => b.id === id);
 
-    const incrementReadCount = (id: number) => {
-        setReadStats((prev) => ({
-            ...prev,
-            [id]: (prev[id] || 0) + 1,
-        }));
+    const incrementReadCount = async (id: number) => {
+        if (!user) return;
+
+        // Optimistic update
+        setMyBooks(prev => prev.map(book =>
+            book.id === id
+                ? { ...book, personalReadCount: (book.personalReadCount || 0) + 1 }
+                : book
+        ));
+
         setLastReadBookId(id);
+
+        try {
+            await booksApi.incrementReadCount(user.id, id);
+        } catch (error) {
+            console.error("Error incrementing read count", error);
+            // Revert on failure? For stats, maybe not critical to revert UI immediately, but technically correct.
+        }
     };
 
     const getMostReadBook = (): Book | null => {
-        let maxId = -1;
-        let maxCount = -1;
+        if (myBooks.length === 0) return null;
 
-        for (const [id, count] of Object.entries(readStats)) {
-            if (count > maxCount) {
-                maxCount = count;
-                maxId = parseInt(id);
-            }
-        }
+        const mostRead = myBooks.reduce((prev, current) => {
+            const prevCount = prev.personalReadCount || 0;
+            const currentCount = current.personalReadCount || 0;
+            return (prevCount >= currentCount) ? prev : current;
+        });
 
-        if (maxId === -1) return null;
-        return myBooks.find((b) => b.id === maxId) || null;
+        if ((mostRead.personalReadCount || 0) === 0) return null;
+        return mostRead;
     };
 
     const getBooksSavedLastMonth = (): number => {

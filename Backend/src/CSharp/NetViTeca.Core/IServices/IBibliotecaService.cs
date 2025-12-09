@@ -31,4 +31,9 @@ public interface IBibliotecaService
     /// <param name="idUsuario">ID del usuario.</param>
     /// <returns>Resultado Ok o NotFound si la asignación no existe.</returns>
     Task<Result<bool>> RetirarLibroAUsuario(int idLibro, int idUsuario);
+
+    /// <summary>
+    /// Incrementa el contador de veces que el usuario ha leído el libro.
+    /// </summary>
+    Task<Result<bool>> IncrementarContadorLectura(int idLibro, int idUsuario);
 }

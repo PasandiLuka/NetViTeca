@@ -69,8 +69,8 @@ export default function BookCard({ id, image, title, author, editorial, descript
                 onDelete();
               }}
               className="
-                 absolute top-2 right-2 bg-red-500/80 text-white text-xs px-2 py-1 rounded-md font-bold shadow-lg
-                 hover:bg-red-600 transition-colors z-20
+                 absolute top-2 right-2 bg-white/90 backdrop-blur-sm !text-red-600 text-xs px-2 py-1 rounded-md font-bold shadow-lg
+                 hover:bg-white hover:!text-red-800 transition-colors z-20
                "
             >
               ✕ Eliminar
@@ -185,11 +185,11 @@ export default function BookCard({ id, image, title, author, editorial, descript
               <button
                 onClick={() => { onDelete(); setOpenModal(false); }}
                 className="
-                  w-full mt-3 py-2 rounded-lg font-semibold text-white
-                  bg-red-600 
-                  hover:bg-red-500 hover:text-red-400
-                  active:scale-[0.97] transition-all
-                "
+                    w-full mt-3 py-2 rounded-lg font-semibold
+                    !text-red-600 border border-red-500/20
+                    hover:bg-red-500/10 hover:!text-red-800
+                    active:scale-[0.97] transition-all
+                  "
               >
                 🗑 Eliminar de mi biblioteca
               </button>

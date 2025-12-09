@@ -40,4 +40,16 @@ public class RepoBiblioteca : RepoBaseAdo, IRepoBiblioteca
         await _context.SaveChangesAsync();
         return true;
     }
+
+    /// <inheritdoc />
+    public async Task<bool> IncrementarLectura(int bookId, int userId)
+    {
+        var registro = await _context.Bibliotecas.FindAsync(bookId, userId);
+        
+        if (registro == null) return false;
+
+        registro.ReadCount++;
+        await _context.SaveChangesAsync();
+        return true;
+    }
 }
