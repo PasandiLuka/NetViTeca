@@ -54,10 +54,10 @@ public class UsuarioService : IUsuarioService
     }
 
     /// <inheritdoc/>
-    public async Task<Result<UsuarioResponseDTO>> AutenticarUsuario(string email, string password)
+    public async Task<Result<UsuarioResponseDTO>> AutenticarUsuario(string input, string password)
     {
-        // 1. Obtener el usuario por correo
-        var usuario = await _repoUsuario.ObtenerUsuarioPorCorreo(email);
+        // 1. Obtener el usuario por correo o nombre de usuario
+        var usuario = await _repoUsuario.ObtenerUsuarioPorCorreoONombreUsuario(input);
 
         // 2. Verificar existencia y contraseña hasheada
         if (usuario is null || !PasswordUtils.VerificarPassword(password, usuario.Password))

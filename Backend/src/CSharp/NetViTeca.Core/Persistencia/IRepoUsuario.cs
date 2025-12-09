@@ -15,11 +15,11 @@ public interface IRepoUsuario
     Task<Usuario> AgregarUsuario(Usuario usuario);
 
     /// <summary>
-    /// Busca un usuario basándose únicamente en su correo electrónico.
+    /// Busca un usuario basándose únicamente en su correo electrónico o en su nombre de usuario.
     /// </summary>
-    /// <param name="correo">El correo electrónico del usuario.</param>
+    /// <param name="input">El correo electrónico del usuario o el nombre de usuario.</param>
     /// <returns>El Usuario encontrado o <c>null</c> si no existe.</returns>
-    Task<Usuario?> ObtenerUsuarioPorCorreo(string correo);
+    Task<Usuario?> ObtenerUsuarioPorCorreoONombreUsuario(string input);
 
     /// <summary>
     /// Busca un usuario por su ID.

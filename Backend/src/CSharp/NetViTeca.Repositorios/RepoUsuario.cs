@@ -31,11 +31,11 @@ public class RepoUsuario : RepoBaseAdo, IRepoUsuario
     }
 
     /// <inheritdoc/>
-    public async Task<Usuario?> ObtenerUsuarioPorCorreo(string email)
+    public async Task<Usuario?> ObtenerUsuarioPorCorreoONombreUsuario(string input)
     {
-        // Busca el usuario por correo para que la capa de servicio pueda verificar el hash.
+        // Busca el usuario por correo o nombre de usuario para que la capa de servicio pueda verificar el hash.
         return await _contexto.Usuarios
-            .FirstOrDefaultAsync(u => u.Email == email);
+            .FirstOrDefaultAsync(u => u.Email == input || u.Username == input);
     }
 
     /// <inheritdoc/>

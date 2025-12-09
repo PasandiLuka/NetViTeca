@@ -50,9 +50,9 @@ public class LibroConfig : IEntityTypeConfiguration<Libro>
                         .HasMaxLength(500);
 
                  builder.Property(l => l.Image)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
 
                  builder.Property(l => l.Url)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("TEXT");
     }
 }
