@@ -9,6 +9,10 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  server: {
+    host: true, // 👈 Agrega esto para exponer a la red (0.0.0.0)
+    port: 5173  // (Opcional) Fija el puerto
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

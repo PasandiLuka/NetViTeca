@@ -1,101 +1,73 @@
-# README – Frontend
+# NetViTeca - Frontend 📖
 
-Este proyecto corresponde al **Frontend** de la aplicación del Club de Básquet ET12. Aquí se detallan la estructura, tecnologías utilizadas, scripts principales y convenciones para mantener un desarrollo ordenado y escalable.
+Este directorio contiene el código fuente de la interfaz de usuario de **NetViTeca**, un sistema de gestión para bibliotecas digitales modernas. La aplicación permite a los usuarios explorar catálogos, gestionar su biblioteca personal y administrar su perfil.
 
----
+## 🚀 Tecnologías Principales
 
-## 🚀 Tecnologías principales
+* **Core:** [React 19](https://react.dev/) + [Vite](https://vitejs.dev/)
+* **Lenguaje:** [TypeScript](https://www.typescriptlang.org/) (Tipado estático estricto)
+* **Estilos:** [TailwindCSS v4](https://tailwindcss.com/) + [Bootswatch](https://bootswatch.com/)
+* **Enrutamiento:** [React Router Dom v7](https://reactrouter.com/)
+* **Cliente HTTP:** [Axios](https://axios-http.com/)
+* **Iconos:** [Lucide React](https://lucide.dev/)
 
-* **Framework:** React + Vite
-* **Lenguaje:** TypeScript
-* **Estado y lógica:** Custom hooks + servicios
-* **Estilos:** TailwindCSS
-* **Ruteo:** React Router
-* **Linting:** ESLint + Prettier
+## 📂 Estructura del Proyecto
 
----
+El código fuente se encuentra en la carpeta `src/` y sigue una estructura modular:
 
-## 📂 Estructura del proyecto
-
-```
-frontend/
-├── public/
-├── src/
-│   ├── api/           # Capa API → define endpoints y llamados HTTP
-│   ├── core/          # Capa Core → modelos, tipos, entidades y lógica central
-│   ├── data/          # Capa Data → DTOs, validaciones, mappers
-│   ├── repository/    # Capa Repository → interacción abstracta con la API
-│   ├── services/      # Capa Services → lógica de negocio del frontend
-│   ├── components/    # Componentes reutilizables
-│   ├── pages/         # Páginas del sistema
-│   ├── hooks/         # Hooks personalizados
-│   ├── utils/         # Utilidades generales
-│   ├── App.tsx
-│   └── main.tsx
-└── README.md
+```text
+src/
+├── api/           → Servicios para comunicación con el Backend (.NET)
+├── components/    → Piezas de UI reutilizables (BookCard, Navbar, Sidebar)
+├── context/       → Estado global (Auth, MisLibros, Tema)
+├── layout/        → Diseño principal de la aplicación
+├── pages/         → Vistas completas (Home, Catálogo, Perfil, Auth)
+├── router/        → Configuración de rutas y protección de acceso
+├── styles/        → Hojas de estilo globales y configuración CSS
+├── types/         → Definiciones de interfaces TypeScript (Modelos)
+└── utils/         → Funciones de utilidad (ej. concatenación de clases)
 ```
 
----
+## 🛠️ Instalación y Ejecución
 
-## 🧱 Arquitectura de Capas (frontal)
+Asegúrate de tener Node.js 18+ instalado.
 
-El frontend sigue una arquitectura modular inspirada en **Clean Architecture**, adaptada al ecosistema React.
+    Instalar dependencias: Navega a la carpeta Front-End y ejecuta:
+    Bash
 
-### **1. API Layer (src/api/)**
-
-* Define endpoints.
-* Gestiona requests con fetch/axios.
-* Maneja errores y tokens.
-
-### **2. Core Layer (src/core/)**
-
-* Entidades principales.
-* Tipos globales.
-* Reglas puras del dominio.
-
-### **3. Data Layer (src/data/)**
-
-* DTOs.
-* Validaciones.
-* Mappers entre API ↔ dominio.
-
-### **4. Repository Layer (src/repository/)**
-
-* Abstracción del acceso a datos.
-* Expone métodos como `getPlayers()`, `saveTraining()`, etc.
-
-### **5. Services Layer (src/services/)**
-
-* Orquesta la lógica de negocio.
-* Usa repositorios.
-* Se comunica con hooks o componentes.
-
----
-
-## 📦 Instalación
-
-```bash
 npm install
+
+Configurar Variables de Entorno (Opcional): Por defecto, la aplicación apunta a http://localhost:5017. Si tu backend corre en otro puerto, crea un archivo .env en la raíz de Front-End:
+Fragmento de código
+
+VITE_API_URL=http://tu-backend-url:puerto
+
+Modo Desarrollo: Inicia el servidor local con recarga rápida (HMR):
+```Bash
+npm run dev
 ```
 
----
+La aplicación estará disponible en http://localhost:5173.
 
-## ▶️ Scripts
-
-```bash
-npm run dev       # Ejecuta el servidor de desarrollo
-npm run build     # Construcción para producción
-npm run preview   # Previsualización del build
-npm run lint       # Corre ESLint
+Construir para Producción:
+```Bash
+npm run build
 ```
 
----
+✨ Funcionalidades Implementadas
 
-## 🧭 Convenciones
+    Autenticación: Login y Registro de usuarios con validación.
 
-* **PascalCase** → componentes y entidades.
-* **camelCase** → funciones, variables y hooks.
-* **kebab-case** → nombres de archivos.
-* Evitar lógica de negocio en componentes.
-* Hooks solo deben comunicarse con servicios o repos.
+    Catálogo: Visualización de libros disponibles con filtros por género y búsqueda.
 
+    Mis Libros: Gestión de biblioteca personal (agregar/quitar libros).
+
+    Perfil: Edición de datos de usuario y preferencias (Modo oscuro/claro).
+
+    Administración: Formularios para crear nuevos Libros y Géneros.
+
+    Diseño Responsivo: Interfaz adaptable a móviles y escritorio mediante Tailwind.
+
+🤝 Integración con Backend
+
+El frontend espera conectarse a una API REST estructurada. Consulta la documentación en ../Backend/README.md o ../Sistema/API.md para detalles sobre los endpoints consumidos.

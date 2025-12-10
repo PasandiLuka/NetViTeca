@@ -78,7 +78,7 @@ export default function MiPerfil() {
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                                             <div>
                                                 <p className="text-[var(--color-text-secondary)] mb-1">Nombre Completo</p>
-                                                <p className="text-[var(--color-text-primary)] font-medium text-lg">{user.fullname}</p>
+                                                <p className="text-[var(--color-text-primary)] font-medium text-lg">{user.fullName}</p>
                                             </div>
                                             <div>
                                                 <p className="text-[var(--color-text-secondary)] mb-1">Usuario</p>

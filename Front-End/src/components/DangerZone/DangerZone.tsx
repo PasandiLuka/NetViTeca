@@ -39,23 +39,7 @@ export default function DangerZone({ onLogout, onDeleteAccount }: DangerZoneProp
                         <LogOut size={18} />
                         Cerrar Sesión
                     </button>
-                </div>
-
-                <div className="h-px bg-red-500/10" />
-
-                <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                    <div>
-                        <h3 className="text-red-400 font-medium">Eliminar Cuenta</h3>
-                        <p className="text-sm text-[var(--color-text-secondary)]">Esta acción no se puede deshacer. Perderás todos tus libros guardados.</p>
-                    </div>
-                    <button
-                        onClick={handleDeleteClick}
-                        className="px-6 py-2.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 !text-red-600 hover:!text-red-800 transition-colors flex items-center gap-2 w-full md:w-auto justify-center"
-                    >
-                        <Trash2 size={18} />
-                        Eliminar Cuenta
-                    </button>
-                </div>
+                </div>                
             </div>
 
             {/* Modal de Confirmación */}
